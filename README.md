@@ -48,6 +48,7 @@ Clone once. Build fast. Ship clean.
 git clone https://github.com/ryansallen98/wordpress
 cd wordpress
 ./setup.sh
+```
 
 ## Credits
 
