@@ -5,7 +5,7 @@ import { wordpressPlugin, wordpressThemeJson } from '@roots/vite-plugin';
 import paletteFromTheme from './vite.plugins/palette-from-theme';
 
 export default defineConfig({
-  base: '/app/themes/chacafeusa/public/build/',
+  base: '/app/themes/theme/public/build/',
   plugins: [
     tailwindcss(),
     laravel({

@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "cd web/app/themes/chacafeusa && npm run dev",
-    "build": "cd web/app/themes/chacafeusa && npm run build"
+    "dev": "cd web/app/themes/theme && npm run dev",
+    "build": "cd web/app/themes/theme && npm run build"
   }
 }
