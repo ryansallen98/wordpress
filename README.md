@@ -47,7 +47,7 @@ Clone once. Build fast. Ship clean.
 ```bash
 git clone https://github.com/ryansallen98/wordpress
 cd wordpress
-./setup.sh
+npm run setup
 ```
 
 ## Credits
