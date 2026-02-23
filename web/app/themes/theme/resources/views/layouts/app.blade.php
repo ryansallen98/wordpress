@@ -6,7 +6,7 @@
     @php(do_action('get_header'))
     @php(wp_head())
 
-    @vite(['resources/css/app.css', 'resources/js/app.ts'])
+    @vite(['resources/css/app.css', 'resources/ts/app.ts'])
   </head>
 
   <body @php(body_class())>
