@@ -36,6 +36,7 @@
 | Button group | [Button group](https://ui.shadcn.com/docs/components/radix/button-group) | [button-group.md](button-group.md) |
 | Calendar | [Calendar](https://ui.shadcn.com/docs/components/radix/calendar) | [calendar.md](calendar.md) |
 | Native select | [Native Select](https://ui.shadcn.com/docs/components/native-select) | [native-select.md](native-select.md) |
+| Skeleton | [Skeleton](https://ui.shadcn.com/docs/components/skeleton) | [skeleton.md](skeleton.md) |
 
 ## Adding a component
 

@@ -1,3 +1,11 @@
+## 1.0.72 — 2026-04-08
+
+- **Native select:** **`index.blade.php`** — **`<select>`** uses **`$tw->merge($selectClasses, $attributes->get('class') ?? '')`** and **`$attributes->except('class')`** instead of **`class="{{ $selectClasses }}"` + raw **`{{ $attributes }}`**, matching other kit class components. **`docs/components/native-select.md`** (forwarding + Modifying).
+
+## 1.0.71 — 2026-04-08
+
+- **Shadpine UI:** **Skeleton** — **`x-skeleton`** (`App\View\Components\Skeleton\Skeleton`), **`config/components/skeleton.php`**, **`resources/views/components/skeleton/index.blade.php`**; kit block + **`docs/components/skeleton.md`** and catalog row (**`docs/components/INDEX.md`**). Parity with [shadcn/ui Skeleton](https://ui.shadcn.com/docs/components/skeleton) (`animate-pulse`, **`bg-muted`**, **`rounded-md`**, **`motion-reduce:animate-none`**).
+
 ## 1.0.70 — 2026-04-08
 
 - **Calendar:** When **`show-outside-days="false"`**, keep a full **7×N** grid with **padding** cells (hidden outside-month slots) instead of dropping days — fixes **uneven flex cell width** and **weekday column drift**. Alpine: **`padding`** cells use **`role="presentation"`** / **`aria-hidden`** and no day button; **`buildCalendarWeeks`**, **`tdClass`**, **`selectCell`**, **`pickIsoForDayOfMonthInMonth`** updated; tests adjusted.

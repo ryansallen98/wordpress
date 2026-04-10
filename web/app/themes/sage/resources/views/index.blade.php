@@ -191,6 +191,26 @@
       </div>
     </div>
 
+    {{-- Skeleton — docs/components/skeleton.md --}}
+    <div class="space-y-4">
+      <div>
+        <h3 class="text-lg font-medium text-foreground">{!! __('Skeleton', 'sage') !!}</h3>
+        <p class="text-muted-foreground mt-1 text-sm">
+          {!! __('Loading placeholders; size and shape with Tailwind utilities on class.', 'sage') !!}
+        </p>
+      </div>
+      <div class="flex max-w-md flex-col gap-4">
+        <x-skeleton class="h-4 w-full" />
+        <div class="flex items-center gap-4">
+          <x-skeleton class="size-12 shrink-0 rounded-full" />
+          <div class="grow space-y-2">
+            <x-skeleton class="h-4 w-full" />
+            <x-skeleton class="h-4 w-3/4" />
+          </div>
+        </div>
+      </div>
+    </div>
+
     {{-- Breadcrumb — docs/components/breadcrumb.md --}}
     <div class="space-y-4">
       <div>

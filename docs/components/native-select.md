@@ -34,7 +34,7 @@ Styled **`<select>`** with a chevron affordance. Prefer this over the Radix-styl
 | **`select-data-slot`** | `native-select` | Override **`data-slot`** on the **`<select>`**. |
 | **`icon-data-slot`** | `native-select-icon` | Override **`data-slot`** on the chevron SVG. |
 
-All **other** attributes (**`name`**, **`id`**, **`disabled`**, **`required`**, **`aria-invalid`**, **`multiple`**, **`x-model`**, etc.) are forwarded to the **`<select>`** via **`$attributes`**.
+All **other** attributes (**`name`**, **`id`**, **`disabled`**, **`required`**, **`aria-invalid`**, **`multiple`**, **`x-model`**, etc.) are forwarded to the **`<select>`** via **`$attributes->except('class')`**. The **`<select>`** **`class`** attribute is **`$tw->merge($selectClasses, $attributes->get('class') ?? '')`** so config + **`select-class`** stay merged in PHP, and any **`class`** left on the forwarded bag (same pattern as other Shadpine class components) is merged in Blade.
 
 ### Options
 
@@ -74,7 +74,8 @@ When describing this control in **`{{ __('…') }}` / `{!! __('…') !!}`** stri
 
 ## Modifying
 
-- **Tokens:** edit the **`$wrapperBase`**, **`$selectBase`**, **`$iconBase`** / option / optgroup strings in the component Blade files; use **`$tw->merge`** for consumer overrides.
+- **Tokens:** edit **`config/components/native_select.php`** (**`root.wrapper`**, **`select`**, **`icon`**) and sub-keys for **`option`** / **`optgroup`**; PHP merges **`class`** / **`select-class`** / **`icon-class`** props via **`NativeSelect`**, **`Option`**, **`Group`**.
+- **Root Blade:** **`index.blade.php`** — wrapper uses **`$wrapperClasses`**; **`<select>`** uses **`$tw->merge($selectClasses, $attributes->get('class') ?? '')`** plus **`$attributes->except('class')`** for the rest.
 - **Chevron:** `x-lucide-chevron-down` in `index.blade.php`; icon uses **`end-2.5`** for RTL-friendly positioning.
 
 ## Exporting
