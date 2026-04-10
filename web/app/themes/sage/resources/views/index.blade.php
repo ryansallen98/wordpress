@@ -561,7 +561,7 @@
             {!! __('Range (two months)', 'sage') !!}
           </p>
           <div class="max-w-full overflow-x-auto">
-            <x-calendar class="w-fit max-w-none rounded-lg border" mode="range" :number-of-months="2" />
+            <x-calendar class="w-fit max-w-none rounded-lg border" mode="range" :number-of-months="2" show-outside-days="false"  />
           </div>
           <div class="border-border text-muted-foreground mt-3 space-y-2 border-t pt-3 text-sm">
             <p class="text-foreground text-xs font-medium uppercase tracking-wide">
