@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\View\Components\Accordion\Primitive;
 
+use App\View\Components\Support\ShadpineComponent;
 use Illuminate\Contracts\View\View as ViewContract;
-use Illuminate\View\Component;
 
-class Trigger extends Component
+class Trigger extends ShadpineComponent
 {
     public function __construct(
         public int $level = 3,

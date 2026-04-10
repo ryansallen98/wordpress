@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\View\Components\ButtonGroup;
 
+use App\View\Components\Support\ShadpineComponent;
 use Illuminate\Contracts\View\View as ViewContract;
-use Illuminate\View\Component;
 use TailwindMerge\TailwindMerge;
 
-class ButtonGroup extends Component
+class ButtonGroup extends ShadpineComponent
 {
     public function __construct(
         public string $orientation = 'horizontal',

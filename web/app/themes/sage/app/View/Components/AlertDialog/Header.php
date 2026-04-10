@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\View\Components\AlertDialog;
 
+use App\View\Components\Support\ShadpineComponent;
 use Illuminate\Contracts\View\View as ViewContract;
-use Illuminate\View\Component;
 use TailwindMerge\TailwindMerge;
 
-class Header extends Component
+class Header extends ShadpineComponent
 {
     public function __construct(
         public string $dataSlot = 'alert-dialog-header',

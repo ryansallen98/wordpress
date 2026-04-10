@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\View\Components\Badge;
 
 use App\View\Components\Support\AllowedTag;
+use App\View\Components\Support\ShadpineComponent;
 use Illuminate\Contracts\View\View as ViewContract;
-use Illuminate\View\Component;
 use TailwindMerge\TailwindMerge;
 
-class Badge extends Component
+class Badge extends ShadpineComponent
 {
     public function __construct(
         public string $as = 'span',

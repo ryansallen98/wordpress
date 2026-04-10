@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\View\Components\AlertDialog\Primitive;
 
+use App\View\Components\Support\ShadpineComponent;
 use Illuminate\Contracts\View\View as ViewContract;
-use Illuminate\View\Component;
 
-class Title extends Component
+class Title extends ShadpineComponent
 {
     public function __construct(
         public string $as = 'h2',

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\View\Components\NativeSelect;
 
+use App\View\Components\Support\ShadpineComponent;
 use Illuminate\Contracts\View\View as ViewContract;
-use Illuminate\View\Component;
 use TailwindMerge\TailwindMerge;
 
-class NativeSelect extends Component
+class NativeSelect extends ShadpineComponent
 {
     public function __construct(
         public string $class = '',

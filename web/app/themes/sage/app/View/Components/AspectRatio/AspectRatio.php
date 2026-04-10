@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\View\Components\AspectRatio;
 
+use App\View\Components\Support\ShadpineComponent;
 use Illuminate\Contracts\View\View as ViewContract;
-use Illuminate\View\Component;
 use TailwindMerge\TailwindMerge;
 
-class AspectRatio extends Component
+class AspectRatio extends ShadpineComponent
 {
     public function __construct(
         public string $ratio = '16/9',

@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\View\Components\AlertDialog\Primitive;
 
 use App\View\Components\AlertDialog\DialogCloseClick;
+use App\View\Components\Support\ShadpineComponent;
 use Illuminate\Contracts\View\View as ViewContract;
-use Illuminate\View\Component;
 
-class Cancel extends Component
+class Cancel extends ShadpineComponent
 {
     public function __construct(
         public bool $autofocus = true,

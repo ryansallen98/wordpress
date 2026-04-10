@@ -1,3 +1,7 @@
+## 1.0.65 — 2026-04-08
+
+- **Shadpine UI:** **`App\View\Components\Support\ShadpineComponent`** — all kit class components extend it so **`data()`** runs before **`resolveView()`** / **`render()`**, matching Laravel’s own **`BladeCompiler::renderComponent`** order and fixing **`$this->attributes` null** after **`view:clear`** (and avoiding stale compiled views pointing at removed **`App\View\Components\{Name}`** classes). Rule **`09`**.
+
 ## 1.0.64 — 2026-04-08
 
 - **Shadpine UI:** Root Blade class components moved from **`app/View/Components/{Name}.php`** into **`app/View/Components/{Name}/{Name}.php`** (namespace **`App\View\Components\{Name}`**) so each widget lives under one folder. **`x-{name}`** tags unchanged (Laravel **`ComponentTagCompiler`** nested class fallback). Rule **`09`**, **`docs/components/calendar.md`** portable paths.

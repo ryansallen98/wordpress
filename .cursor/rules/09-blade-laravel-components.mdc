@@ -39,6 +39,7 @@ Shared data for views belongs in **View Composers** (`App\View\Composers/*`), **
 **Do not** use **`@props`** or **`@php`** in Blade under **`resources/views/components/**/*.blade.php`**. Those templates stay **presentation-only**: `{{ }}`, slots, structural `@if`, and composition of child components (e.g. **`<x-*.primitive.*>`**).
 
 - **Defaults,** **`config('components.*')`**, **`$tw->merge(...)`**, attribute normalization, and any branching belong in **`app/View/Components/`**:
+  - **Base class:** Shadpine class components extend **`App\View\Components\Support\ShadpineComponent`** (calls **`data()`** before **`resolveView()`** so **`$this->attributes`** exists in **`render()`** — Blade’s compiled **`startComponent($component->resolveView(), $component->data())`** evaluates the first argument first).
   - **Root tag** **`x-{name}`** → **`App\View\Components\{Name}\{Name}.php`** (class **`App\View\Components\{Name}\{Name}`** — Laravel resolves **`x-accordion`** via the nested fallback). Keeps each widget isolated under its folder.
   - **Nested tags** **`x-{name}.{sub}`** → **`App\View\Components\{Name}\{Sub}.php`** (e.g. **`Button\Icon.php`**, **`AlertDialog\Primitive\Trigger.php`**). Match Laravel’s nested component naming.
   - **Colocated helpers** for that widget → **`App\View\Components\{Name}\*.php`** (e.g. **`Calendar\ViewState.php`**, **`Button\ButtonClasses.php`**, **`AlertDialog\DialogCloseClick.php`**).

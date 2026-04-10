@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\View\Components\Breadcrumb;
 
+use App\View\Components\Support\ShadpineComponent;
 use Illuminate\Contracts\View\View as ViewContract;
-use Illuminate\View\Component;
 use TailwindMerge\TailwindMerge;
 
-class Breadcrumb extends Component
+class Breadcrumb extends ShadpineComponent
 {
     public function __construct(
         public ?string $ariaLabel = null,

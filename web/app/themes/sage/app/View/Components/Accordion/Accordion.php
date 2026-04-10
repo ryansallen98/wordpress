@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\View\Components\Accordion;
 
+use App\View\Components\Support\ShadpineComponent;
 use Illuminate\Contracts\View\View as ViewContract;
-use Illuminate\View\Component;
 use TailwindMerge\TailwindMerge;
 
-class Accordion extends Component
+class Accordion extends ShadpineComponent
 {
     public function __construct(
         public string $type = 'single',

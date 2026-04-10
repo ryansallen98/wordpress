@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\View\Components\Button;
 
 use App\View\Components\Support\AllowedTag;
+use App\View\Components\Support\ShadpineComponent;
 use Illuminate\Contracts\View\View as ViewContract;
-use Illuminate\View\Component;
 use TailwindMerge\TailwindMerge;
 
-class Icon extends Component
+class Icon extends ShadpineComponent
 {
     public function __construct(
         public string $as = 'button',

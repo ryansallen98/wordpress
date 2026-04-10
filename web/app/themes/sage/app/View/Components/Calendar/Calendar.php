@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\View\Components\Calendar;
 
+use App\View\Components\Support\ShadpineComponent;
 use Illuminate\Contracts\View\View as ViewContract;
-use Illuminate\View\Component;
 use TailwindMerge\TailwindMerge;
 
 /**
  * Calendar grid (Blade shell + Alpine). View data is built in {@see ViewState}.
  */
-class Calendar extends Component
+class Calendar extends ShadpineComponent
 {
     /**
      * @param  array<int|string, mixed>|mixed  $disabled
