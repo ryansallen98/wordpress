@@ -46,7 +46,7 @@ alwaysApply: true
 | Acorn / Laravel (theme PHP) | `08-acorn-php-laravel.mdc`, skill `acorn-laravel` |
 | Blade components (Laravel) | `09-blade-laravel-components.mdc` |
 | Tailwind v4 (theme) | skill `tailwindcss-development` |
-| Shadpine UI | `resources/views/components/`, `primitive/`, `resources/ts/components/`, `config/classes/`; **`docs/components/`**; **`14-shadpine-ui.mdc`**, skill **`shadpine-ui`** |
+| Shadpine UI | `resources/views/components/`, `primitive/`, `resources/ts/components/`, `config/classes/` (only when shadcn exports CVA, e.g. button); **`docs/components/`**; **`14-shadpine-ui.mdc`**, skill **`shadpine-ui`** |
 | Mirror drift | `./scripts/check-agent-mirrors.sh`; `.github/workflows/agent-mirrors.yml`; `git config core.hooksPath scripts/githooks` |
 | MCP | `docs/mcp.md`; `.cursor/mcp.json` + `.mcp.json` (WP-CLI/Acorn, Context7, Playwright, GitHub, Perplexity); `npm ci` in `scripts/mcp-wp-acorn/` |
 | PHPUnit + Vitest (mandatory) | `10-testing-mandatory.mdc`; skill `testing-php-vitest`; theme `composer test` / `composer run test:integration`; `npm run test` |
@@ -76,4 +76,4 @@ Authoritative detail: `.cursor/rules/*.mdc`. MCP: `.cursor/mcp.json`. Hub: `CLAU
 | `testing-php-vitest` | PHPUnit (theme + plugins), Vitest for `resources/ts`, commands, integration vs default suite |
 | `prettier-tailwind` | Prettier + Tailwind class sort; Blade/PHP excluded; Pint for PHP |
 | `linting-php-eslint` | Theme Pint + ESLint commands, `eslint.config.js`, CI/root gates |
-| `shadpine-ui` | Shadpine UI widgets: primitive + styled Blade, Alpine TS, Vitest, `config/classes` |
+| `shadpine-ui` | Shadpine UI widgets: primitive + styled Blade, Alpine TS, Vitest; `config/classes` only for exported CVA (e.g. button) |

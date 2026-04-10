@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { accordion } from '../accordion';
+import { accordion } from './accordion';
 
 function mockTrigger(): HTMLElement {
   return { focus: vi.fn() } as unknown as HTMLElement;

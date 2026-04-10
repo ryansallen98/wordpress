@@ -43,7 +43,7 @@ Current template: `sage`.
 | `./vendor/bin/phpunit --filter=…` | Fast iteration; then **`composer test`** for full default suite. |
 
 - Config: **`vitest.config.js`** (aliases align with **`vite.config.js`** / `@scripts`).
-- Test globs: **`resources/**/*.{test,spec}.{js,ts}`** (covers **`resources/ts/components/__tests__/{name}.test.ts`** and similar).
+- Test globs: **`resources/**/*.{test,spec}.{js,ts}`** (covers colocated **`resources/ts/components/{name}/{name}.test.ts`** and similar).
 - **`passWithNoTests: false`** — if you change TS, add or keep tests.
 
 ## Repo root shortcuts (optional)

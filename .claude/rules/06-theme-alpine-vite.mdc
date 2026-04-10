@@ -10,7 +10,7 @@ Paths under `web/app/themes/{THEME_SLUG}/` (`sage` in this template).
 
 ## Alpine + accessibility (P)
 
-- Alpine in Blade; **logic** in `resources/ts/alpine/**/*.ts` (eager-import from `app.ts` when used) and **`resources/ts/components/*.ts`** for **Shadpine UI** primitives (**`14-shadpine-ui.mdc`**, skill **`shadpine-ui`**). Register UI factories from `app.ts`.
+- Alpine in Blade; **logic** in `resources/ts/alpine/**/*.ts` (eager-import from `app.ts` when used) and **`resources/ts/components/{name}/`** (barrel **`index.ts`**, implementation **`{name}.ts`**) for **Shadpine UI** primitives (**`14-shadpine-ui.mdc`**, skill **`shadpine-ui`**). Register UI factories from `app.ts`.
 - **Forbidden for theme UI:** inline `<script>`, `@push` script stacks, `onclick`/`onkeydown` for app behavior, non-bundled JS.
 - Use `@alpinejs/collapse`, `@alpinejs/focus` for disclosures and focus traps.
 - **Ship gate:** every applicable WCAG 2.2 AAA criterion for the pattern. `docs/frontend-alpine.md`.

@@ -17,19 +17,28 @@ alwaysApply: true
 
 | Layer | Responsibility | Location (this repo) |
 |-------|----------------|----------------------|
-| **Primitive** | Accessibility, keyboard behavior, ARIA, state wiring (Alpine `x-data`, events, `x-id`, etc.) | `resources/views/components/{name}/primitive/*.blade.php` |
-| **Styled** | Default Tailwind, slots, `data-slot`, consumer overrides via `$attributes` + **`$tw->merge()`** | `resources/views/components/{name}/*.blade.php` (outside `primitive/`) |
-| **Alpine logic** | Typed `Alpine.data(...)` factories; no heavy logic in Blade | `resources/ts/components/{name}.ts` |
-| **Shared class tokens** | Variant/size/base strings (CVA-style maps) | `config/classes/{name}.php` → `config('classes.{name}')` |
+| **Primitive** | **Radix-parity behavior:** roles, ARIA, keyboard/focus, and **all Alpine** for this widget (`x-data` on root, `x-teleport`, `x-trap`, `x-show`, `x-on:*`, `x-bind` for `aria-*`, etc.). **No** heavy Tailwind here—only pass through `class` from the styled parent via `$attributes` when needed. | `resources/views/components/{name}/primitive/*.blade.php` |
+| **Styled** | Default Tailwind only: **`$tw->merge()`**, slots, **`data-slot`** (see below); composes **`<x-{name}.primitive.*>`** (same idea as shadcn styled files wrapping Radix) | `resources/views/components/{name}/*.blade.php` (outside `primitive/`) |
+| **Alpine logic** | Typed `Alpine.data(...)` factories; no heavy logic in Blade | `resources/ts/components/{name}/` — **`{name}.ts`** (+ **`index.ts`** barrel); multi-file widgets (e.g. **calendar**) keep helpers in the same folder |
+| **Shared class tokens** | **Only** when upstream shadcn exports CVA for reuse (e.g. **`buttonVariants`**) | `config/classes/{name}.php` → `config('classes.{name}')` |
+| **One-off layout/appearance** | Default `cn(...)` strings from the registry file, colocated in Blade | `resources/views/components/{name}/*.blade.php` — still use **`$tw->merge(..., $attributes->get('class'))`** |
 
-- **Tailwind merge:** `TailwindMerge` is shared to views as **`$tw`** from `ThemeServiceProvider` — merge **base → variants → `$attributes->get('class')`** so consumers can override.
+### `config/classes` vs classes in Blade
+
+- **Add `config/classes/{slug}.php`** only when the shadcn/ui source **exports** a CVA map meant for reuse (example: [Button](https://ui.shadcn.com/docs/components/radix/button) exports **`buttonVariants`**; this repo mirrors that as **`config/classes/button.php`** so **`x-button`**, **`alert-dialog` actions**, etc. stay DRY).
+- **Do not** add a `config/classes` file for components whose registry TSX only calls **`cn(...)`** inline with **no** exported **`fooVariants`** (example: [Alert Dialog](https://ui.shadcn.com/docs/components/radix/alert-dialog) — keep overlay/content/header strings **in the Blade partials** next to the markup).
+- **Parity:** when the user links a shadcn doc URL, compare class strings against the **current** registry implementation (e.g. `apps/v4/registry/new-york-v4/ui/{component}.tsx` in [shadcn-ui/ui](https://github.com/shadcn-ui/ui)), not an remembered older build.
+
+- **Accordion reference:** see **`accordion/`** — e.g. **`accordion/primitive/trigger.blade.php`** (ARIA + `@click` / `@keydown` + `x-id`) vs **`accordion/trigger.blade.php`** (tokens + **`x-accordion.primitive.trigger`**). New widgets follow the same split.
+- **Tailwind merge:** `TailwindMerge` is shared to views as **`$tw`** from `ThemeServiceProvider` — merge **base → variants → `$attributes->get('class')`** so consumers can override (typically in **styled** files).
+- **`data-slot` (mandatory pattern):** Never hardcode **`data-slot="…"`** as a fixed string-only attribute on a Shadpine root or sub-part. Declare a **`@props`** default (camelCase: **`dataSlot`**, or **`wrapperDataSlot` / `selectDataSlot`** when one Blade file renders multiple slotted nodes) matching shadcn parity, output **`data-slot="{{ $dataSlot }}"`** (etc.). Consumers override with **`data-slot`**, **`wrapper-data-slot`**, etc. Primitives that already use **`dataSlot`** keep the same rule. If Tailwind utilities in the same file use literals like **`data-[slot=accordion-trigger-icon]`**, keep those class strings in sync with the prop default or document that overrides need matching class overrides (JIT must still see full utilities in source).
 - **Registration:** each Alpine component factory is imported and registered in **`resources/ts/app.ts`** (e.g. `Alpine.data('accordion', accordion)`).
 
 ## Interactivity & accessibility
 
 - Any **interactive** or **stateful** pattern (accordion, dialog, menu, tabs, …) **must** use a **`primitive/`** subtree for a11y and behavior; styled wrappers compose primitives (same idea as Radix + shadcn in React).
 - Target **WCAG 2.2** at the level appropriate to the pattern (keyboard, focus order, roles, labels, `aria-*`, reduced motion where transitions exist). Validate against the [WAI-ARIA APG](https://www.w3.org/WAI/ARIA/apg/) pattern for that widget.
-- **Tests:** ship **Vitest** unit tests for every `resources/ts/components/{name}.ts` module at **`resources/ts/components/__tests__/{name}.test.ts`** (or any path matched by **`vitest.config.js`**). Cover state transitions, edge cases, and keyboard/helper behavior that is pure TS. Complement with manual or browser checks for full a11y when needed.
+- **Tests:** ship **Vitest** unit tests colocated under **`resources/ts/components/{name}/`** (e.g. **`accordion/accordion.test.ts`**, **`calendar/calendar.test.ts`**) — any path matched by **`vitest.config.js`**. Cover state transitions, edge cases, and keyboard/helper behavior that is pure TS. Complement with manual or browser checks for full a11y when needed.
 
 ### Accessibility checklist (each new interactive primitive)
 
@@ -43,7 +52,7 @@ Complete before treating the primitive as done. Record the **APG pattern URL** i
 | 4 | **Names:** Every control has a visible label or **accessible name** (text, `aria-label`, or labelled-by); decorative icons **`aria-hidden="true"`**. |
 | 5 | **Focus:** Focus order logical; **focus visible** (e.g. `focus-visible:ring-*`); no stuck focus inside hidden content. |
 | 6 | **Motion:** **`prefers-reduced-motion`** respected for open/close animations/transitions. |
-| 7 | **Automation:** **Vitest** for `resources/ts/components/{name}.ts`; manual keyboard + SR smoke on a real page for this widget. |
+| 7 | **Automation:** **Vitest** for `resources/ts/components/{name}/`; manual keyboard + SR smoke on a real page for this widget. |
 
 **Human documentation:** add or update **`docs/components/{name}.md`** (props, slots, files, APG link) when adding a component — see **`docs/components/INDEX.md`**.
 

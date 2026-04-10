@@ -32,7 +32,7 @@ Stack rules live under **`.cursor/rules/*.mdc`** (authoritative copies also unde
 | `11-frontend-formatting.mdc` | always | EditorConfig + mandatory Prettier (+ Tailwind class sort); not for Blade/PHP |
 | `12-acf-blocks.mdc` | always | ACFE Gutenberg blocks: `block.php`, `resources/views/blocks/`, `Composers/Blocks`, `tests/Blocks` |
 | `13-mandatory-lint.mdc` | always | Mandatory Pint (theme PHP) + ESLint (theme TS/JS); `npm run lint` = ESLint + Prettier check |
-| `14-shadpine-ui.mdc` | always | **Shadpine UI** — Alpine kit inspired by shadcn/ui; `primitive/`, TS, `config/classes`, Vitest; Blade in this template |
+| `14-shadpine-ui.mdc` | always | **Shadpine UI** — Alpine kit inspired by shadcn/ui; `primitive/`, TS, Vitest; `config/classes` only when shadcn exports CVA (e.g. `buttonVariants`); Blade in this template |
 
 When you change a topic, edit the **matching `.mdc`** or skill, run **`./scripts/sync-agent-mirrors.sh`**, and keep this hub’s **tokens and table** accurate after renames.
 
@@ -55,7 +55,7 @@ Skills: **`.claude/skills/`** (authoritative); **`.cursor/skills/`** is the Curs
 | `prettier-tailwind` | Prettier + `prettier-plugin-tailwindcss`; `npm run format` / `format:check`; root `npm run format:theme` |
 | `linting-php-eslint` | Theme Pint + ESLint; `eslint.config.js`; `npm run lint` / `lint:fix`; root `npm run test:theme` includes both |
 | `acf-blocks` | `block.php` → `resources/views/blocks/`; new-block checklist in **`12-acf-blocks.mdc`**; `Composers/Blocks`, `tests/Blocks` |
-| `shadpine-ui` | **Shadpine UI**: shadcn/ui–inspired Alpine components; primitives, styled Blade, TS + Vitest, `config/classes` |
+| `shadpine-ui` | **Shadpine UI**: shadcn/ui–inspired Alpine components; primitives, styled Blade, TS + Vitest; `config/classes` only for exported CVA (e.g. button) |
 
 Hub entrypoint: `.claude/CLAUDE.md` → this file.
 

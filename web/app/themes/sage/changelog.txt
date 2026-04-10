@@ -1,3 +1,200 @@
+## 1.0.59 — 2026-04-08
+
+- **Calendar:** Moved setup out of Blade into **`App\View\Components\Calendar`** + **`ViewState::make()`**; **`index.blade.php`** is markup-only. Caption **year** `<option>` range uses **effective** **`min`** / **`max`** (after **`disable-past`** / **`disable-future`**). PHPUnit **`ViewStateTest`**. **`docs/components/calendar.md`** portable bundle paths.
+
+## 1.0.58 — 2026-04-10
+
+- **Calendar (portable bundle):** **`CalendarBounds`** moved from **`App\Support`** to **`App\View\Components\Calendar`** (`app/View/Components/Calendar/CalendarBounds.php`) beside **`resources/views/components/calendar/`**. Tests → **`tests/View/Components/Calendar/CalendarBoundsTest.php`**. **`docs/components/calendar.md`** — **Portable bundle** checklist (paths + deps).
+
+## 1.0.57 — 2026-04-10
+
+- **Calendar DX:** **`disable-past`** and **`disable-future`** Blade props merge with **`min`** / **`max`** using **`CalendarBounds`** (today from **`time-zone`** or app default). PHPUnit + **Kit** + **`docs/components/calendar.md`**.
+
+## 1.0.56 — 2026-04-10
+
+- **Calendar:** Prev/next **`nav`** moved to a **sibling of month panels** under the **`months`** container (React DayPicker / shadcn markup) so chevrons align to the **full multi-month width**, not only the first column. **`docs/components/calendar.md`** (toolbar note).
+
+## 1.0.55 — 2026-04-10
+
+- **Calendar (range / multi-month sizing):** **`config/classes/calendar.php`** — **`--cell-size:theme(spacing.7)`**, **`--cell-radius`**, weekday + week rows as **`flex`** + **`flex-1`** cells (shadcn / RDP parity); **`month`** **`md:min-w-[calc(7*var(--cell-size))]`**; day button tokens aligned with registry (**`relative isolate z-10`**, **`rounded-(--cell-radius)`**). Root **`data-mode`** / **`data-multiple-months`**; grid **`aria-multiselectable`**. **Kit:** range block **`lg:col-span-2`**, **`w-fit`** + **`overflow-x-auto`** wrapper. **`docs/components/calendar.md`**.
+
+## 1.0.54 — 2026-04-10
+
+- **Calendar:** **`caption-layout="dropdown"`** (month/year selects) only when **`number-of-months`** is **1**; **2+** months always use **label** captions (Blade + Alpine). **Kit** range demo uses **two months**; two-month single demo label updated. **`docs/components/calendar.md`**, Vitest.
+
+## 1.0.53 — 2026-04-10
+
+- **TS components layout:** Each Alpine module lives under **`resources/ts/components/{name}/`** with **`index.ts`** barrel and colocated **`*.test.ts`** (removed **`components/__tests__/`**). **accordion**, **alert_dialog**, **calendar** (+ helpers). **`app.ts`** imports unchanged (**`./components/{name}`**). Rules, skills, **`docs/components/*`**, **`vitest.config.js`** comment updated.
+
+## 1.0.52 — 2026-04-08
+
+- **Kit index:** Calendar section on **`resources/views/index.blade.php`** — examples for **two months**, **label** caption, **disabled + modifiers** (booked), and **time-zone** (UTC today).
+
+## 1.0.51 — 2026-04-08
+
+- **Calendar:** **`number-of-months`** (1–12), **`caption-layout`** (`dropdown` \| `label`), **`time-zone`** (IANA **`Intl`** “today” + initial month when unset), **`disabled`** ISO list, **`modifiers`** + **`modifiers-class-names`** (React DayPicker–style). **`calendar_modifiers.ts`**, **`calendar_timezone.ts`**, **`monthsSpanCanDisplay`**, Vitest, **`docs/components/calendar.md`**.
+
+## 1.0.50 — 2026-04-08
+
+- **Calendar locale:** **`locale`** prop (BCP 47); default from **`app()->getLocale()`** for Blade + Alpine. **date-fns** locales are **whitelisted** in **`calendar_locales.ts`** with **Vite code-split** **`import()`** ( **`en-US`** sync). Weekday headers, live region, and day **`aria-label`** use the loaded locale. **`docs/components/calendar.md`**, Vitest.
+
+## 1.0.49 — 2026-04-08
+
+- **Calendar toolbar:** Restored **shadcn / RDP-style** toolbar — **`nav`** is **`absolute`** full width with **`justify-between`** so chevrons align to the **edges**; **`pointer-events-none`** on **`nav`** + **`pointer-events-auto`** on buttons preserves **click-through** for centered month/year selects. Tokens: **`month_toolbar`**, **`nav`**, **`month_caption`** (replaces **`month_header`** grid).
+
+## 1.0.48 — 2026-04-08
+
+- **Calendar toolbar:** Replaced overlapping **absolute `nav`** + **`z-10` caption** (arrows were unclickable) with a **three-column grid** (**`month_header`**): DOM order **prev → next → month → year** for **Tab** (arrows first). **`pointer-events-none`** overlay removed.
+
+## 1.0.47 — 2026-04-08
+
+- **Calendar caption selects:** Month/year **`<option>`**s are **Blade-rendered** (12 months + year range **1900–2100** when unconstrained, else min/max-aware). Alpine **`x-for` on `<option>`** left empty dropdowns in browsers; **`x-bind:disabled`** on months remains. Removed **`yearOptions` / `monthName` / `captionMonthNumbers`** from Alpine state.
+
+## 1.0.46 — 2026-04-08
+
+- **Calendar caption selects:** Replaced **`<template x-for>`** inside **`<select>`** with **`x-for` on `<option>`** — a **`<template>`** child of **`<select>`** is invalid HTML, so browsers broke the control tree and month/year UI did not match the grid. Option **`:value`** stringified to match **`x-bind:value`**.
+
+## 1.0.45 — 2026-04-08
+
+- **Calendar sync:** Initial visible month order is selected → month → today so the grid and caption selects match a pre-selected date; the month prop no longer overrides selected. Kit demos: single uses today; range defaults to current month without a month prop. **`docs/components/calendar.md`**, Vitest for **`resolveInitialCalendarVisibleMonth`**.
+
+## 1.0.44 — 2026-04-08
+
+- **Calendar:** Caption month/year selects were unclickable — the full-width **`nav`** row sat above them in the stack. **`nav`** is now **`pointer-events-none`** with **`pointer-events-auto`** on prev/next buttons; **`month_caption`** gets **`relative z-10`** so selects stay usable.
+
+## 1.0.43 — 2026-04-08
+
+- **Calendar:** Initial visible month follows **`selected`** when **`month`** is omitted (PHP + **`resolveInitialCalendarVisibleMonth`** in **`calendar.ts`**). Caption selects use **`caption_select_*`** tokens (borderless, compact, smaller chevron via **`icon-class`** on **`x-native-select`**). Month dropdown uses abbreviated labels (**`MMM`**); live region keeps full **`MMMM yyyy`**. **`docs/components/calendar.md`**, **`native-select.md`** (**`icon-class`**).
+
+## 1.0.42 — 2026-04-08
+
+- **Calendar caption:** Month and year **`x-native-select`** dropdowns (with distinct **`data-slot`** names) for accessible jumps; **`min`/`max`** constrain the year list and disable impossible months. Prev/next buttons unchanged. **`calendar.ts`:** **`navigateToVisibleMonth`**, **`buildCalendarYearOptions`**, **`isCalendarCaptionMonthDisabled`**, Vitest coverage. **`docs/components/calendar.md`**, **`config/classes/calendar.php`** caption layout.
+
+## 1.0.41 — 2026-04-08
+
+- **Shadpine `data-slot`:** Overridable **`@props`** on **`x-native-select`** (**`wrapperDataSlot`**, **`selectDataSlot`**, **`iconDataSlot`**), **`option`** / **`group`** (**`dataSlot`**), **`x-breadcrumb`** (**`navDataSlot`**, **`listDataSlot`**), **`x-calendar`** root (**`dataSlot`**). Rule **`.cursor/rules/14-shadpine-ui.mdc`** + skill **`shadpine-ui`** document the mandatory pattern for new components.
+
+## 1.0.40 — 2026-04-08
+
+- **Native select:** Removed **`config/classes/native_select.php`** — class strings inlined in **`native-select/*.blade.php`**. **Kit copy fix:** `{!! __() !!}` with a literal “select” tag in the string was parsed as a real **`<select>`** inside the intro paragraph, breaking DOM on category archives. Switched to **`{{ __() }}`** and rephrased. **`docs/components/native-select.md`** updated (DOM + exporting notes).
+
+## 1.0.39 — 2026-04-08
+
+- **Shadpine `x-native-select`:** finished port — **`native-select/`** Blade (wrapper + **`<select>`** + chevron, **`<option>`**, **`<optgroup>`**), **`config/classes/native_select.php`**, fixed root **`$classes`** typo (**`$wrapperClasses`**), **`$attributes`** → **`<select>`**, **`class`** vs **`select-class`**, **`size`** **`sm`/`default`**. **`docs/components/native-select.md`**, catalog row, kit block on **`index.blade.php`**. Chevron uses **`end-2.5`** for RTL.
+
+## 1.0.38 — 2026-04-08
+
+- **Calendar keyboard:** When arrows cannot find a next in-grid day (e.g. **October 2026** with **`show-outside-days: false`**), **Arrow Right** / **Down** / **Left** / **Up** at the grid edge **changes `visibleMonth`** like **Page Down** / **Page Up** (day-of-month preserved when possible). Docs + Vitest for in-month-only grid edges.
+
+## 1.0.37 — 2026-04-08
+
+- **Calendar:** When keyboard focus (arrows) or pointer / Tab focus moves to an **outside-month** day, **`visibleMonth`** advances so that month is shown (within **min**/**max**). **`monthCanDisplayCalendarView`** + Vitest. **`docs/components/calendar.md`** updated.
+
+## 1.0.36 — 2026-04-08
+
+- **Calendar a11y:** Roving **`tabindex`** on day buttons; **Arrow** / **Home** / **End** / **Page Up** / **Page Down** keyboard navigation (skip disabled cells; month keys respect **min**/**max**); **`aria-readonly`** on the grid, **`aria-current="date"`** for today; focus restored after month change when focus was on a day. **`docs/components/calendar.md`** updated. Vitest coverage for **`moveCalendarKeyboardFocus`** / **`pickInitialCalendarFocusIso`**.
+
+## 1.0.35 — 2026-04-08
+
+- **Blade / HTTP 500:** **`@while` + inline `@php(the_post())`** compiled to broken PHP (rest of the template left unparsed). Loops now use a **`@php` … `@endphp`** block for **`the_post()`** (`index`, `single`, `search`, `page`, `template-custom`).
+- **Alpine vs Blade:** **`x-on:`** for **`calendar-select`** / **`calendar-select-range`**, **`accordion`** / **`alert-dialog`** primitives (**`click`**, **`keydown`**) so **`@`** is not parsed as a Blade directive; inclusive-days label uses **`@js($kitDaysSuffix)`** in **`x-data`** instead of **`@js` inside `x-text`**.
+
+## 1.0.34 — 2026-04-08
+
+- **Shadpine kit (`index.blade.php`):** calendar demos show **live readouts** under single + range pickers (**`x-on:calendar-select`** / **`x-on:calendar-select-range`**) with **ISO**, **`Intl`** **`dateStyle`**, numeric **Y-M-D**, range **weekday span**, slash-style span, and **inclusive day count**.
+
+## 1.0.33 — 2026-04-08
+
+- **Shadpine `x-calendar`:** day button hover matches shadcn **`Button variant="ghost"`** — **`hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50`**, **`transition-colors`**, disabled hover reset; **`hover:data-[selected-single|range-*]`** keeps primary / accent fills on hover instead of washing out.
+
+## 1.0.32 — 2026-04-08
+
+- **Shadpine `x-calendar`:** day `<button>` **`p-0 m-0 border-0 bg-transparent gap-0 shadow-none`** — matches shadcn **`Button`** reset (their **`CalendarDayButton`** uses **`Button`**, not a raw control; UA padding was inflating cells).
+
+## 1.0.31 — 2026-04-08
+
+- **Shadpine `x-calendar`:** day button **`inline-flex items-center justify-center`** (drop **`flex-col gap-1`**) so the date numeral is centered in the square.
+
+## 1.0.30 — 2026-04-08
+
+- **Shadpine `x-calendar`:** match shadcn sizing — root **`[--cell-size:--spacing(8)]`**, rows **`repeat(7,minmax(var(--cell-size),1fr))`**, day button **`size-auto min-w-(--cell-size)`** (registry parity). Fixes over-compressed **`w-fit`** grid. Docs **`calendar.md`** updated.
+
+## 1.0.29 — 2026-04-08
+
+- **Shadpine `x-calendar`:** default root width **`w-fit`** (shadcn parity); use **`class="w-full"`** when the grid should fill a container. Docs + kit examples updated.
+
+## 1.0.28 — 2026-04-08
+
+- **Shadpine `x-calendar`:** fix layout — weekday + day rows use **`grid grid-cols-7`** (equal columns); day cells **`min-w-0`** + **`place-items-center`**; **`role="grid"`** shell **`w-full`**. Kit demos in a two-column **`grid`**. **`day_button`** uses **`aspect-square w-full`** without fixed **`min-w-(--cell-size)`**.
+
+## 1.0.27 — 2026-04-08
+
+- **Shadpine `x-calendar`:** **`calendar/index.blade.php`**, **`config/classes/calendar.php`**, **`calendar.ts`** + **`calendar_grid.ts`** (date-fns), Vitest, **`Alpine.data('calendar')`**. Single + range modes, min/max, **`calendar-select`** events. Docs **`docs/components/calendar.md`**, catalog row, **kit** on **`index.blade.php`**. Runtime dep **`date-fns`**.
+
+## 1.0.26 — 2026-04-08
+
+- **Shadpine `x-button-group`:** align **`config/classes/button_group.php`** with shadcn **new-york-v4** registry — full **`buttonGroupVariants`** base (select-trigger + input rules), **`ButtonGroupText`** / **`ButtonGroupSeparator`**+**`Separator`** `cn()` strings. Docs **`docs/components/button-group.md`** updated.
+
+## 1.0.25 — 2026-04-08
+
+- **Shadpine `x-button-group`:** **`button-group/`** Blade parts + **`config/classes/button_group.php`** (shadcn CVA parity). Tailwind **`@source`** **`../../config/`** in **`app.css`** for class scan. Docs **`docs/components/button-group.md`**, catalog row, **kit** examples on **`index.blade.php`**.
+
+## 1.0.24 — 2026-04-08
+
+- **Shadpine `x-breadcrumb`:** **`breadcrumb/*.blade.php`** — **`ellipsis`** partial; **`$tw`** + **`$attributes`** on all parts. Docs **`docs/components/breadcrumb.md`**, catalog row, **kit** examples on **`index.blade.php`** (basic + custom separator + ellipsis).
+
+## 1.0.23 — 2026-04-08
+
+- **Shadpine kit (`index.blade.php`):** **Lucide** examples — text buttons with **`x-lucide-*`** plus multiple **`x-button.icon`** variants; **aspect ratio** demos use **Lorem Picsum** (Unsplash-sourced) images with **`alt`**, dimensions, and attribution note.
+
+## 1.0.22 — 2026-04-08
+
+- **Shadpine kit on home template:** **`index.blade.php`** — single **Shadpine UI kit** section with guide copy + examples for **Accordion**, **Alert**, **Alert dialog**, **Aspect ratio**, **Badge**, **Button**; Blade comment to keep in sync with **`docs/components/INDEX.md`**. **Alert dialog** demo no longer uses **`default-open`**. Docs: **`INDEX.md`** step — add examples to **`index.blade.php`** when adding a catalog component.
+
+## 1.0.21 — 2026-04-08
+
+- **Shadpine `x-aspect-ratio`:** **`resources/views/components/aspect-ratio/index.blade.php`** — **`ratio`** presets (**`square`**, **`video`**, **`16/9`**, **`N/M`**) via inline **`aspect-ratio`** + **`$tw->merge`**. Docs: **`docs/components/aspect-ratio.md`**, catalog row in **`docs/components/INDEX.md`**.
+
+## 1.0.20 — 2026-04-08
+
+- **Alert dialog action/cancel:** merge consumer **`x-on:click`** with **`closeDialog()`** when the expression does not already reference **`closeDialog`**; supports **`type="submit"`** on **`primitive.action`**. Docs: custom handlers, forms, Livewire notes.
+
+## 1.0.19 — 2026-04-08
+
+- **Alert dialog portal:** replace **`display: contents`** with **`fixed inset-0 z-50`** so Alpine **`x-transition`** leave can finish before **`x-show`** tears down (fixes exit flash with **`tw-animate`**). **`primitive.portal`** accepts **`enter-duration` / `leave-duration`**; styled **`content`** exposes **`duration`** (default **`duration-100`**) to keep portal transitions and overlay/panel animation timing in sync.
+
+## 1.0.18 — 2026-04-08
+
+- **Alert dialog animations:** use **`data-[state=open|closed]:`** with **`tw-animate-css`** (not **`data-open:`**). Bind **`x-bind:data-state="open ? 'open' : 'closed'"`** on overlay + panel so Blade does not parse **`:`** as PHP. Docs updated.
+
+## 1.0.17 — 2026-04-08
+
+- **Alert dialog:** **`primitive/content`** and **`primitive/overlay`** are **ARIA + `data-*` only** (no default Tailwind). Styled **`content.blade.php`** owns overlay + panel **`$tw->merge`** and composes **`primitive.portal`** → **`primitive.overlay`** + **`primitive.content`**. Docs file table updated.
+
+## 1.0.16 — 2026-04-08
+
+- **Alert dialog trigger:** any **`as="x-{component}"`** resolves to **`&lt;x-dynamic-component :component="{component}" /&gt;`** (strip the **`x-`** prefix); no fixed map. Docs: **`x-*`** convention.
+
+## 1.0.15 — 2026-04-08
+
+- **Alert dialog trigger:** **`as="x-button"`** and **`as="x-button.icon"`** render **`&lt;x-button&gt;` / `&lt;x-button.icon&gt;`** with **`x-on:click="openDialog()"`**; native **`span` / `button` / `a`** unchanged. Docs updated.
+
+## 1.0.14 — 2026-04-08
+
+- **Alert dialog:** **`primitive/`** holds Radix-parity **Alpine + ARIA** (root `x-data` / `x-id`, trigger open, content teleport / trap / escape / `role="alertdialog"`, title/description `x-bind:id`, cancel/action `x-on:click`). **Styled** Blade files only **`$tw->merge`** + **`<x-alert-dialog.primitive.*>`** (same split as **`accordion/`**). **Rule `14-shadpine-ui`:** clarify primitive vs styled layering + accordion reference.
+
+## 1.0.13 — 2026-04-08
+
+- **Alert dialog:** align Tailwind with **shadcn v4** registry **`alert-dialog.tsx`** (overlay **`bg-black/50`**, **`group/alert-dialog-content`**, **`data-size`**, header/footer/title/description/media **`cn`** strings). Remove **`config/classes/alert_dialog.php`** — no upstream CVA export; tokens live in Blade only. **Shadpine rule/skill:** add **`config/classes`** only when shadcn exports reusable CVA (e.g. **`buttonVariants`**).
+
+## 1.0.12 — 2026-04-08
+
+- **Alert dialog:** fix Blade compile/runtime for the kit page — **`cancel` / `action`** use a native **`<button>`** + **`config('classes.button')`** merge (not nested **`&lt;x-button&gt;`**); Alpine use **`x-on:click`** / **`x-on:keydown`** so **`@…`** is not parsed as Blade directives; **`trigger`** default **`as="span"`** (allow **`&lt;x-button&gt;`** in slot without nested buttons); trigger **`type`** via **`{!! $typeAttr !!}`** instead of **`@if`** in the opening tag.
+
+## 1.0.11 — 2026-04-08
+
+- **Shadpine UI:** **`x-alert-dialog`** (primitive root, trigger, content w/ **`x-teleport`**, header/footer/title/description/media/cancel/action), **`config/classes/alert_dialog.php`**, **`alert_dialog.ts`** + Vitest, **`Alpine.data('alertDialog')`**. Docs: **`docs/components/alert-dialog.md`**, catalog row in **`docs/components/INDEX.md`**.
+
 ## 1.0.10 — 2026-04-08
 
 - **Shadpine UI:** **`x-badge`** — `resources/views/components/badge/index.blade.php`, **`config/classes/badge.php`**. Docs: **`docs/components/badge.md`**, catalog row in **`docs/components/INDEX.md`**.

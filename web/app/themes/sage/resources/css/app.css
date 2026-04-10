@@ -3,6 +3,7 @@
 @plugin "@tailwindcss/typography";
 @source "../views/";
 @source "../../app/";
+@source "../../config/";
 
 @import './theme.css';
 @import './typography.css';

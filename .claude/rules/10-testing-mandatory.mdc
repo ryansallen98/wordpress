@@ -29,7 +29,7 @@ Applies to **first-party** code under **`web/app/themes/{THEME_SLUG}/`** and **`
 - Theme uses **Vite**; **Vitest** is the standard unit test runner for **`resources/ts/**/*.ts`** (and `.js` if present).
 - **Any new or materially changed** TS/JS that contains logic (Alpine modules, helpers, utilities, data transforms — not a one-line re-export): **must** include or update tests; **`npm run test`** **must pass** before the task is complete.
 - **Commands** (from **`web/app/themes/{THEME_SLUG}/`**): **`npm run lint`** (ESLint + Prettier check — **`13-mandatory-lint.mdc`**), **`npm run test`** (CI-style **`vitest run`**), **`npm run test:watch`** during development, **`npm run typecheck`** (`tsc --noEmit`) before merge.
-- Test files: **`*.test.ts`**, **`*.spec.ts`** (or `.js`) under **`resources/`**, discovered by **`vitest.config.js`** (including **`resources/**/__tests__/**`** for component modules). **`passWithNoTests: false`** — do not leave the tree without tests when TS changes ship.
+- Test files: **`*.test.ts`**, **`*.spec.ts`** (or `.js`) under **`resources/`**, discovered by **`vitest.config.js`** (including colocated tests next to components, e.g. **`resources/ts/components/accordion/accordion.test.ts`**). **`passWithNoTests: false`** — do not leave the tree without tests when TS changes ship.
 - Prefer **pure functions** and small modules so **`environment: 'node'`** stays sufficient; use **`jsdom`** (or project-standard DOM env) only when testing DOM-bound code, and document the choice in the test file or skill.
 
 ## Before merge / “done”

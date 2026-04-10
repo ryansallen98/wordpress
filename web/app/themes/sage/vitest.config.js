@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export default defineConfig({
   test: {
     environment: 'node',
-    // Includes colocated tests and `**/__tests__/**` (e.g. `resources/ts/components/__tests__/*.test.ts`).
+    // Colocated tests: `resources/**/*.test.ts` (e.g. `resources/ts/components/accordion/accordion.test.ts`).
     include: ['resources/**/*.{test,spec}.{js,ts}'],
     exclude: ['node_modules', 'public/build', 'vendor'],
     passWithNoTests: false,
