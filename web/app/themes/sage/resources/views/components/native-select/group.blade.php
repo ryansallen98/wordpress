@@ -1,14 +1,3 @@
-@props([
-    'label' => '',
-    'disabled' => false,
-    'dataSlot' => 'native-select-optgroup',
-])
-
-@php
-    $optgroupBase = 'bg-[Canvas] text-[CanvasText]';
-    $groupClasses = $tw->merge($optgroupBase, $attributes->get('class'));
-@endphp
-
 <optgroup
     data-slot="{{ $dataSlot }}"
     class="{{ $groupClasses }}"

@@ -1,9 +1,4 @@
-@props([
-  'level' => 3,
-  'dataSlot' => 'accordion-trigger',
-])
-
-<h{{ $level }} 
+<h{{ $level }}
   class="flex"
   :data-state="isOpen($id('acc')) ? 'open' : 'closed'"
 >

@@ -1,13 +1,3 @@
-@props([
-    'dataSlot' => 'breadcrumb-ellipsis',
-])
-@php
-    $classes = $tw->merge(
-        'flex size-9 items-center justify-center [&>svg]:size-4',
-        $attributes->get('class')
-    );
-@endphp
-
 <span
     data-slot="{{ $dataSlot }}"
     class="{{ $classes }}"

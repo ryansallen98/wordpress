@@ -17,8 +17,8 @@ alwaysApply: true
 
 | Layer | Responsibility | Location (this repo) |
 |-------|----------------|----------------------|
-| **Primitive** | **Radix-parity behavior:** roles, ARIA, keyboard/focus, and **all Alpine** for this widget (`x-data` on root, `x-teleport`, `x-trap`, `x-show`, `x-on:*`, `x-bind` for `aria-*`, etc.). **No** heavy Tailwind here—only pass through `class` from the styled parent via `$attributes` when needed. | `resources/views/components/{name}/primitive/*.blade.php` |
-| **Styled** | Default Tailwind only: **`$tw->merge()`**, slots, **`data-slot`** (see below); composes **`<x-{name}.primitive.*>`** (same idea as shadcn styled files wrapping Radix) | `resources/views/components/{name}/*.blade.php` (outside `primitive/`) |
+| **Primitive** | **Radix-parity behavior:** roles, ARIA, keyboard/focus, and **all Alpine** for this widget (`x-data` on root, `x-teleport`, `x-trap`, `x-show`, `x-on:*`, `x-bind` for `aria-*`, etc.). **No** heavy Tailwind here—only pass through `class` from the styled parent via `$attributes` when needed. Props / logic → **`App\View\Components\{Name}\Primitive\*.php`**; **`primitive/*.blade.php`** stays **markup-only** (no **`@props`** / **`@php`**). | `resources/views/components/{name}/primitive/*.blade.php` + `app/View/Components/{Name}/Primitive/` |
+| **Styled** | Default Tailwind only (merged in **`App\View\Components/{Name}/*.php`** **`render()`**), slots, **`data-slot`**; composes **`<x-{name}.primitive.*>`** — Blade file is **markup-only** (no **`@props`** / **`@php`**) | `resources/views/components/{name}/*.blade.php` (outside `primitive/`) |
 | **Alpine logic** | Typed `Alpine.data(...)` factories; no heavy logic in Blade | `resources/ts/components/{name}/` — **`{name}.ts`** (+ **`index.ts`** barrel); multi-file widgets (e.g. **calendar**) keep helpers in the same folder |
 | **Shared class tokens** | **Only** when upstream shadcn exports CVA for reuse (e.g. **`buttonVariants`**) | `config/classes/{name}.php` → `config('classes.{name}')` |
 | **One-off layout/appearance** | Default `cn(...)` strings from the registry file, colocated in Blade | `resources/views/components/{name}/*.blade.php` — still use **`$tw->merge(..., $attributes->get('class'))`** |
@@ -30,8 +30,8 @@ alwaysApply: true
 - **Parity:** when the user links a shadcn doc URL, compare class strings against the **current** registry implementation (e.g. `apps/v4/registry/new-york-v4/ui/{component}.tsx` in [shadcn-ui/ui](https://github.com/shadcn-ui/ui)), not an remembered older build.
 
 - **Accordion reference:** see **`accordion/`** — e.g. **`accordion/primitive/trigger.blade.php`** (ARIA + `@click` / `@keydown` + `x-id`) vs **`accordion/trigger.blade.php`** (tokens + **`x-accordion.primitive.trigger`**). New widgets follow the same split.
-- **Tailwind merge:** `TailwindMerge` is shared to views as **`$tw`** from `ThemeServiceProvider` — merge **base → variants → `$attributes->get('class')`** so consumers can override (typically in **styled** files).
-- **`data-slot` (mandatory pattern):** Never hardcode **`data-slot="…"`** as a fixed string-only attribute on a Shadpine root or sub-part. Declare a **`@props`** default (camelCase: **`dataSlot`**, or **`wrapperDataSlot` / `selectDataSlot`** when one Blade file renders multiple slotted nodes) matching shadcn parity, output **`data-slot="{{ $dataSlot }}"`** (etc.). Consumers override with **`data-slot`**, **`wrapper-data-slot`**, etc. Primitives that already use **`dataSlot`** keep the same rule. If Tailwind utilities in the same file use literals like **`data-[slot=accordion-trigger-icon]`**, keep those class strings in sync with the prop default or document that overrides need matching class overrides (JIT must still see full utilities in source).
+- **Tailwind merge:** `TailwindMerge` is shared to views as **`$tw`** from `ThemeServiceProvider` — merge **base → variants → `$attributes->get('class')`** in **`App\View\Components/*`** **`render()`** (or colocated helpers), then pass the resulting class string into Blade.
+- **`data-slot` (mandatory pattern):** Never hardcode **`data-slot="…"`** as a fixed string-only attribute on a Shadpine root or sub-part. Declare the default on the **class component** (camelCase: **`dataSlot`**, or **`wrapperDataSlot` / `selectDataSlot`** when one view renders multiple slotted nodes), output **`data-slot="{{ $dataSlot }}"`** in Blade. Consumers override with **`data-slot`**, **`wrapper-data-slot`**, etc. If Tailwind utilities use literals like **`data-[slot=accordion-trigger-icon]`**, keep those class strings in sync with the prop default or document matching overrides (JIT must still see full utilities in source).
 - **Registration:** each Alpine component factory is imported and registered in **`resources/ts/app.ts`** (e.g. `Alpine.data('accordion', accordion)`).
 
 ## Interactivity & accessibility
@@ -62,7 +62,7 @@ Complete before treating the primitive as done. Record the **APG pattern URL** i
 
 ## Scope boundaries
 
-- **`resources/views/components/`** is **UI only** (presentation + behavior for design-system widgets). No WordPress queries, business rules, or domain logic—those stay in composers, features, or support classes (**`05-theme-php-blade-acf.mdc`**).
+- **`resources/views/components/`** is **UI markup only** for Shadpine (Alpine bindings + structure). **No** **`@php`**, **no** **`@props`** — PHP for props/merges lives in **`app/View/Components/`** per **`09-blade-laravel-components.mdc`**. No WordPress queries, business rules, or domain logic—those stay in **`App\View\Composers/*`**, features, or support classes (**`05-theme-php-blade-acf.mdc`**).
 - Each widget should map to a **named shadcn/ui component** (document the parity target in **`docs/components/{name}.md`** and PR/commit context when adding).
 
 ## Commands & gates

@@ -1,7 +1,3 @@
-@props([
-    'dataSlot' => 'alert-dialog-overlay',
-])
-
 <div
     aria-hidden="true"
     x-bind:data-state="open ? 'open' : 'closed'"

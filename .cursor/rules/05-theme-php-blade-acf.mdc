@@ -43,6 +43,8 @@ PascalCase; self-contained (support, admin, REST, snippets) loaded from feature 
 
 **No** data prep in Blade (`@php` for queries, categories, read-time, related posts, `WpLink` bulk, etc.) — use `App\View\Composers/*`, `Composers/Flexible/*`, or **`Composers/Blocks/*`**. Blade: presentation, loops, `{{ }}`, components; minimal `@php(the_content())` OK. Head/early hooks: `Support` / `ServiceProvider` / `Snippets/frontend`. New partials for title/pagination: register views on `Post::$views` (or equivalent). Term links: `App\Support\WpLink`, not `esc_url(get_term_link(...))` when `WP_Error` possible.
 
+**Shadpine / design-system components** (`resources/views/components/**`): **no `@props` / `@php` in those Blade files** — props, merges, and config live in **`App\View\Components/*`** (class **`render()`** + colocated PHP under **`View/Components/{Name}/`**). See **`09-blade-laravel-components.mdc`** and **`14-shadpine-ui.mdc`**.
+
 ## `@php` safety (Section O)
 
 **Never** `@php(expr)` in a file that also has `@php` … `@endphp`. Use block `@php` when `@endphp` exists; `@php(expr)` only if no `@endphp`. Verify WordPress + Acorn helpers (no unwired Laravel facades). Reuse `resources/views/components/` and tokens.

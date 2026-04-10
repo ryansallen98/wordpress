@@ -1,8 +1,3 @@
-@props([
-    'size' => 'default',
-    'dataSlot' => 'alert-dialog-content',
-])
-
 <div
     role="alertdialog"
     aria-modal="true"

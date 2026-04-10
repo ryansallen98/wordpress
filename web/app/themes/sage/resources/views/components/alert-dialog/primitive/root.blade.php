@@ -1,8 +1,3 @@
-@props([
-    'defaultOpen' => false,
-    'dataSlot' => 'alert-dialog',
-])
-
 <div
     data-slot="{{ $dataSlot }}"
     x-data="alertDialog({ defaultOpen: @js($defaultOpen) })"

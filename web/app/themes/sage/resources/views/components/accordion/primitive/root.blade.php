@@ -1,8 +1,3 @@
-@props([
-    'type' => 'single',
-    'dataSlot' => 'accordion',
-])
-
 <div
   {{ $attributes->except('data-slot') }}
   data-slot="{{ $dataSlot }}"

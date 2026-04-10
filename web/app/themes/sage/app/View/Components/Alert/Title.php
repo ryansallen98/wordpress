@@ -1,0 +1,33 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\View\Components\Alert;
+
+use Illuminate\Contracts\View\View as ViewContract;
+use Illuminate\View\Component;
+use TailwindMerge\TailwindMerge;
+
+class Title extends Component
+{
+    public function __construct(
+        public string $as = 'div',
+        public string $dataSlot = 'alert-title',
+    ) {}
+
+    public function render(): ViewContract
+    {
+        /** @var TailwindMerge $tw */
+        $tw = app('tw');
+
+        $classes = $tw->merge(
+            'cn-font-heading font-medium group-has-[>svg]/alert:col-start-2 [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground',
+            $this->attributes->get('class'),
+        );
+
+        return view('components.alert.title', array_merge($this->data(), [
+            'tag' => $this->as,
+            'classes' => $classes,
+        ]));
+    }
+}

@@ -76,8 +76,7 @@ class Calendar extends Component
             $tw,
         );
 
-        return view('components.calendar.index', array_merge($state, [
-            'dataSlot' => $this->dataSlot,
+        return view('components.calendar.index', array_merge($this->data(), $state, [
             'tw' => $tw,
         ]));
     }

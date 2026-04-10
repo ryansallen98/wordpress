@@ -1,3 +1,7 @@
+## 1.0.60 — 2026-04-08
+
+- **Shadpine UI:** All **`resources/views/components/**/*.blade.php`** are **markup-only** (no **`@props`** / **`@php`**). Props, **`config('classes.*')`**, and **`$tw->merge`** live in **`app/View/Components/*`** (nested classes for **`x-{name}.{sub}`**, helpers under **`View/Components/{Name}/`**, **`Support/`** for tiny cross-widget utilities). Rules **`09`**, **`05`**, **`14`** + **`shadpine-ui`** skill updated; **`AspectRatio/Dimensions`** PHPUnit.
+
 ## 1.0.59 — 2026-04-08
 
 - **Calendar:** Moved setup out of Blade into **`App\View\Components\Calendar`** + **`ViewState::make()`**; **`index.blade.php`** is markup-only. Caption **year** `<option>` range uses **effective** **`min`** / **`max`** (after **`disable-past`** / **`disable-future`**). PHPUnit **`ViewStateTest`**. **`docs/components/calendar.md`** portable bundle paths.

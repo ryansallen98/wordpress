@@ -1,10 +1,3 @@
-@props([
-    'dataSlot' => 'alert-dialog-portal',
-    /** Tailwind duration segment (e.g. duration-100) — must match overlay/panel `duration-*` + tw-animate exit time so Alpine does not hide before keyframes finish. */
-    'enterDuration' => 'duration-100',
-    'leaveDuration' => 'duration-100',
-])
-
 <template x-teleport="body">
     <div
         x-show="open"

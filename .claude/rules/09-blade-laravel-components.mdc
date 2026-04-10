@@ -34,6 +34,19 @@ Avoid threading the same prop through every layer; use **`@aware`** for props pr
 
 Shared data for views belongs in **View Composers** (`App\View\Composers/*`), **flexible** composers (`Composers/Flexible/*`), or **block** composers (`Composers/Blocks/*` — **`12-acf-blocks.mdc`**) — not duplicated across controllers (Sage has no classic MVC controllers for every view). Same rule as Section N in `05-theme-php-blade-acf.mdc`.
 
+## Shadpine UI — `resources/views/components/**` (class components)
+
+**Do not** use **`@props`** or **`@php`** in Blade under **`resources/views/components/**/*.blade.php`**. Those templates stay **presentation-only**: `{{ }}`, slots, structural `@if`, and composition of child components (e.g. **`<x-*.primitive.*>`**).
+
+- **Defaults,** **`config('classes.*')`**, **`$tw->merge(...)`**, attribute normalization, and any branching belong in **`app/View/Components/`**:
+  - **Root tag** **`x-{name}`** → **`App\View\Components\{Name}.php`** (e.g. **`Button.php`**, **`AlertDialog.php`**).
+  - **Nested tags** **`x-{name}.{sub}`** → **`App\View\Components\{Name}\{Sub}.php`** (e.g. **`Button\Icon.php`**, **`AlertDialog\Primitive\Trigger.php`**). Match Laravel’s nested component naming.
+  - **Colocated helpers** for that widget → **`App\View\Components\{Name}\*.php`** (e.g. **`Calendar\ViewState.php`**, **`Button\ButtonClasses.php`**, **`AlertDialog\DialogCloseClick.php`**).
+- **Rare shared utilities** (e.g. HTML tag allowlist) → **`App\View\Components\Support/*`** — keep minimal; prefer widget-local helpers.
+- In **`render()`**, return **`view('components.{path}', array_merge($this->data(), [...]))`** so **`$slot`**, **`$attributes`**, and constructor props are available in Blade.
+
+**`App\View\Composers/*`** remains for **templates, flexible layouts, and blocks** — not for replacing component prop/view data for files under **`resources/views/components/`**. Detail: **`14-shadpine-ui.mdc`**.
+
 ## Fragments (optional)
 
 For **htmx** / **Turbo** partial responses, `->fragmentIf(...)` can return a fragment instead of a full layout — only if the project uses that stack.

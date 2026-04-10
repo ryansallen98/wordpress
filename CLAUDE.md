@@ -27,7 +27,7 @@ Stack rules live under **`.cursor/rules/*.mdc`** (authoritative copies also unde
 | `06-theme-alpine-vite.mdc` | `web/app/themes/**/*.{blade.php,ts,css}` | Alpine + TS, Vite, Tailwind v4, WCAG gate |
 | `07-docs-stack-pointers.mdc` | always | Docs map, MCP, skills index |
 | `08-acorn-php-laravel.mdc` | `web/app/themes/**/*.php` | Acorn: DI, `config()`, security for HTTP/DB, what **not** to use (Eloquent-by-default, etc.) |
-| `09-blade-laravel-components.mdc` | `web/app/themes/**/*.blade.php` | Laravel Blade: `$attributes->merge`, components vs `@include`, `@pushOnce`, `@aware` |
+| `09-blade-laravel-components.mdc` | `web/app/themes/**/*.blade.php` | Laravel Blade: `$attributes->merge`, components vs `@include`, `@pushOnce`, `@aware`; Shadpine **`resources/views/components/**`** markup-only — props/merge in **`App\View\Components/*`** |
 | `10-testing-mandatory.mdc` | always | Mandatory PHPUnit + Vitest; theme `composer test` / `test:integration`; `npm run test` / `typecheck` |
 | `11-frontend-formatting.mdc` | always | EditorConfig + mandatory Prettier (+ Tailwind class sort); not for Blade/PHP |
 | `12-acf-blocks.mdc` | always | ACFE Gutenberg blocks: `block.php`, `resources/views/blocks/`, `Composers/Blocks`, `tests/Blocks` |

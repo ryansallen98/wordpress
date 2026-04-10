@@ -1,8 +1,3 @@
-@props([
-    'open' => false,
-    'dataSlot' => 'accordion-item',
-])
-
 <div
   {{ $attributes->except([
     'data-slot',
