@@ -18,14 +18,14 @@ alwaysApply: true
 | Layer | Responsibility | Location (this repo) |
 |-------|----------------|----------------------|
 | **Primitive** | **Radix-parity behavior:** roles, ARIA, keyboard/focus, and **all Alpine** for this widget (`x-data` on root, `x-teleport`, `x-trap`, `x-show`, `x-on:*`, `x-bind` for `aria-*`, etc.). **No** heavy Tailwind here—only pass through `class` from the styled parent via `$attributes` when needed. Props / logic → **`App\View\Components\{Name}\Primitive\*.php`**; **`primitive/*.blade.php`** stays **markup-only** (no **`@props`** / **`@php`**). | `resources/views/components/{name}/primitive/*.blade.php` + `app/View/Components/{Name}/Primitive/` |
-| **Styled** | Class strings live in **`config/classes/{name}.php`** (or sibling slugs); **`App\View\Components/{Name}/*.php`** only **`config()` + `$tw->merge()`** — Blade is **markup-only** (no **`@props`** / **`@php`**) | `resources/views/components/{name}/*.blade.php` + `config/classes/` |
+| **Styled** | Class strings live in **`config/components/{name}.php`** (or sibling slugs); **`App\View\Components/{Name}/*.php`** only **`config()` + `$tw->merge()`** — Blade is **markup-only** (no **`@props`** / **`@php`**) | `resources/views/components/{name}/*.blade.php` + `config/components/` |
 | **Alpine logic** | Typed `Alpine.data(...)` factories; no heavy logic in Blade | `resources/ts/components/{name}/` — **`{name}.ts`** (+ **`index.ts`** barrel); multi-file widgets (e.g. **calendar**) keep helpers in the same folder |
-| **Shared class tokens** | **Only** when upstream shadcn exports CVA for reuse (e.g. **`buttonVariants`**) | `config/classes/{name}.php` → `config('classes.{name}')` |
-| **One-off layout/appearance** | Default **`cn(...)`** / registry strings → **`config/classes/{slug}.php`** (not in **`app/View/Components/*.php`**) | **`config/classes/*.php`** — merged in component **`render()`** |
+| **Shared class tokens** | **Only** when upstream shadcn exports CVA for reuse (e.g. **`buttonVariants`**) | `config/components/{name}.php` → `config('components.{name}')` |
+| **One-off layout/appearance** | Default **`cn(...)`** / registry strings → **`config/components/{slug}.php`** (not in **`app/View/Components/*.php`**) | **`config/components/*.php`** — merged in component **`render()`** |
 
-### `config/classes` vs Blade
+### `config/components` vs Blade
 
-- **Add or extend `config/classes/{slug}.php`** for any Shadpine tokens consumed from PHP: CVA maps when shadcn exports them (e.g. **`buttonVariants`** → **`button.php`**), **and** styled-only widgets (e.g. **`alert_dialog.php`**, **`accordion.php`**, **`breadcrumb.php`**) so **all Tailwind utilities editable in one place** per widget.
+- **Add or extend `config/components/{slug}.php`** for any Shadpine tokens consumed from PHP: CVA maps when shadcn exports them (e.g. **`buttonVariants`** → **`button.php`**), **and** styled-only widgets (e.g. **`alert_dialog.php`**, **`accordion.php`**, **`breadcrumb.php`**) so **all Tailwind utilities editable in one place** per widget.
 - **Blade** under **`resources/views/components/`** stays free of **`@php`** / **`@props`**; use **`class="{{ $classes }}"`** (or static **`class="…"`** only when no merge runs in PHP for that node).
 - **Parity:** when the user links a shadcn doc URL, compare class strings against the **current** registry implementation (e.g. `apps/v4/registry/new-york-v4/ui/{component}.tsx` in [shadcn-ui/ui](https://github.com/shadcn-ui/ui)), not an remembered older build.
 

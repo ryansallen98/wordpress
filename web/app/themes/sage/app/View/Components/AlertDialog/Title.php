@@ -20,7 +20,7 @@ class Title extends Component
         /** @var TailwindMerge $tw */
         $tw = app('tw');
         /** @var array{title: string} $c */
-        $c = config('classes.alert_dialog');
+        $c = config('components.alert_dialog');
         $classes = $tw->merge(
             $c['title'],
             $this->attributes->get('class'),

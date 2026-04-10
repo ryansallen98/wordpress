@@ -22,7 +22,7 @@ class Text extends Component
         $tw = app('tw');
 
         /** @var array{text: array{base: string}} $c */
-        $c = config('classes.button_group');
+        $c = config('components.button_group');
 
         $tag = AllowedTag::resolve($this->as, ['div', 'span', 'label'], 'div');
         $classes = $tw->merge($c['text']['base'], $this->attributes->get('class'));

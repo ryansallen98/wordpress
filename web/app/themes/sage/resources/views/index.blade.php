@@ -254,7 +254,7 @@
       <div>
         <h3 class="text-lg font-medium text-foreground">{!! __('Button', 'sage') !!}</h3>
         <p class="text-muted-foreground mt-1 text-sm">
-          {!! __('Variants and sizes from config/classes/button.php. Icons use mallardduck/blade-lucide-icons (x-lucide-*).', 'sage') !!}
+          {!! __('Variants and sizes from config/components/button.php. Icons use mallardduck/blade-lucide-icons (x-lucide-*).', 'sage') !!}
         </p>
       </div>
       <div class="flex max-w-3xl flex-col gap-6">

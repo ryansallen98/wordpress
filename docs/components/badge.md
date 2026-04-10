@@ -9,7 +9,7 @@ Badges are **presentational** (no `primitive/` subtree): small labels for status
 | Role | Path |
 |------|------|
 | Default badge | `resources/views/components/badge/index.blade.php` |
-| Class tokens | `config/classes/badge.php` → `config('classes.badge')` |
+| Class tokens | `config/components/badge.php` → `config('components.badge')` |
 
 ## Usage (Blade)
 
@@ -21,7 +21,7 @@ Badges are **presentational** (no `primitive/` subtree): small labels for status
 ```
 
 - **`as`:** `span` (default), `a`, `button`, `div` — use **`a`** only with a real **`href`**; use **`button`** for actions and set **`type="button"`** when inside a form so you do not submit accidentally.
-- **`variant`:** `default`, `secondary`, `destructive`, `outline`, `ghost`, `link` (see `config/classes/badge.php`).
+- **`variant`:** `default`, `secondary`, `destructive`, `outline`, `ghost`, `link` (see `config/components/badge.php`).
 - **`data-slot`:** default `badge`; override via the `dataSlot` prop if you need a different slot marker for styling or tests.
 
 ## Accessibility
@@ -33,9 +33,9 @@ Badges are **presentational** (no `primitive/` subtree): small labels for status
 
 ## Modifying
 
-- **Variants:** edit `config/classes/badge.php` (CVA-style strings).
+- **Variants:** edit `config/components/badge.php` (CVA-style strings).
 - **Markup:** edit `index.blade.php`; keep `$tw->merge` order: **base → variant →** `$attributes->get('class')`.
 
 ## Exporting
 
-Copy `badge/index.blade.php` and `config/classes/badge.php`; ensure Blade has **`$tw`** (TailwindMerge) shared into views like this theme’s `ThemeServiceProvider`. Acorn loads `config/classes/*.php` as nested keys (e.g. `config('classes.badge')`).
+Copy `badge/index.blade.php` and `config/components/badge.php`; ensure Blade has **`$tw`** (TailwindMerge) shared into views like this theme’s `ThemeServiceProvider`. Acorn loads `config/components/*.php` as nested keys (e.g. `config('components.badge')`).

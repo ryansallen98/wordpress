@@ -38,12 +38,12 @@ Shared data for views belongs in **View Composers** (`App\View\Composers/*`), **
 
 **Do not** use **`@props`** or **`@php`** in Blade under **`resources/views/components/**/*.blade.php`**. Those templates stay **presentation-only**: `{{ }}`, slots, structural `@if`, and composition of child components (e.g. **`<x-*.primitive.*>`**).
 
-- **Defaults,** **`config('classes.*')`**, **`$tw->merge(...)`**, attribute normalization, and any branching belong in **`app/View/Components/`**:
+- **Defaults,** **`config('components.*')`**, **`$tw->merge(...)`**, attribute normalization, and any branching belong in **`app/View/Components/`**:
   - **Root tag** **`x-{name}`** → **`App\View\Components\{Name}.php`** (e.g. **`Button.php`**, **`AlertDialog.php`**).
   - **Nested tags** **`x-{name}.{sub}`** → **`App\View\Components\{Name}\{Sub}.php`** (e.g. **`Button\Icon.php`**, **`AlertDialog\Primitive\Trigger.php`**). Match Laravel’s nested component naming.
   - **Colocated helpers** for that widget → **`App\View\Components\{Name}\*.php`** (e.g. **`Calendar\ViewState.php`**, **`Button\ButtonClasses.php`**, **`AlertDialog\DialogCloseClick.php`**).
 - **Rare shared utilities** (e.g. HTML tag allowlist) → **`App\View\Components\Support/*`** — keep minimal; prefer widget-local helpers.
-- **No Tailwind utility strings** in **`app/View/Components/**/*.php`** — store class maps in **`config/classes/{slug}.php`** (and read via **`config('classes.*')`**); PHP may **`$tw->merge()`**, **`str_replace()`** placeholders (e.g. `{duration}`), and branch on props only. **Blade** may still use **`class="…"`** for static markup when no PHP merge is needed.
+- **No Tailwind utility strings** in **`app/View/Components/**/*.php`** — store class maps in **`config/components/{slug}.php`** (and read via **`config('components.*')`**); PHP may **`$tw->merge()`**, **`str_replace()`** placeholders (e.g. `{duration}`), and branch on props only. **Blade** may still use **`class="…"`** for static markup when no PHP merge is needed.
 - In **`render()`**, return **`view('components.{path}', array_merge($this->data(), [...]))`** so **`$slot`**, **`$attributes`**, and constructor props are available in Blade.
 
 **`App\View\Composers/*`** remains for **templates, flexible layouts, and blocks** — not for replacing component prop/view data for files under **`resources/views/components/`**. Detail: **`14-shadpine-ui.mdc`**.

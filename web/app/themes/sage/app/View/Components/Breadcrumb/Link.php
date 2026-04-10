@@ -20,7 +20,7 @@ class Link extends Component
         /** @var TailwindMerge $tw */
         $tw = app('tw');
         /** @var array{link: string} $c */
-        $c = config('classes.breadcrumb');
+        $c = config('components.breadcrumb');
         $classes = $tw->merge(
             $c['link'],
             $this->attributes->get('class'),

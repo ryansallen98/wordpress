@@ -11,7 +11,7 @@ class Portal extends Component
 {
     public function __construct(
         public string $dataSlot = 'alert-dialog-portal',
-        /** Empty uses `classes.alert_dialog.default_duration_segment`. */
+        /** Empty uses `components.alert_dialog.default_duration_segment`. */
         public string $enterDuration = '',
         public string $leaveDuration = '',
     ) {}
@@ -19,7 +19,7 @@ class Portal extends Component
     public function render(): ViewContract
     {
         /** @var array{default_duration_segment: string} $c */
-        $c = config('classes.alert_dialog');
+        $c = config('components.alert_dialog');
         $def = $c['default_duration_segment'];
         $enter = $this->enterDuration !== '' ? $this->enterDuration : $def;
         $leave = $this->leaveDuration !== '' ? $this->leaveDuration : $def;

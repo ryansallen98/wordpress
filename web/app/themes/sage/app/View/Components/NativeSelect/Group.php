@@ -22,7 +22,7 @@ class Group extends Component
         $tw = app('tw');
 
         /** @var array{optgroup: string} $c */
-        $c = config('classes.native_select');
+        $c = config('components.native_select');
         $groupClasses = $tw->merge($c['optgroup'], $this->attributes->get('class'));
 
         return view('components.native-select.group', array_merge($this->data(), [

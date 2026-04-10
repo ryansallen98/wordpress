@@ -1,6 +1,10 @@
+## 1.0.63 — 2026-04-08
+
+- **Shadpine UI:** Renamed theme folder **`config/classes/`** → **`config/components/`**; **`config('classes.*')`** → **`config('components.*')`** (Acorn nested config keys **`components.{slug}`**). Rules **`07`**, **`09`**, **`14`**, **`shadpine-ui`** skill, **`docs/components/*`**, kit copy, and tests updated.
+
 ## 1.0.62 — 2026-04-08
 
-- **Config:** **`classes.accordion`** — drop redundant **`styled`** parent; flat keys **`root`**, **`trigger`**, **`content`**, **`item`**. **`classes.alert_dialog.styled_root`** → **`root`**.
+- **Config:** **`components.accordion`** — drop redundant **`styled`** parent; flat keys **`root`**, **`trigger`**, **`content`**, **`item`**. **`components.alert_dialog.styled_root`** → **`root`**.
 
 ## 1.0.61 — 2026-04-08
 

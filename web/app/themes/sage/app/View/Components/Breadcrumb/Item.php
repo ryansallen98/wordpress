@@ -19,7 +19,7 @@ class Item extends Component
         /** @var TailwindMerge $tw */
         $tw = app('tw');
         /** @var array{item: string} $c */
-        $c = config('classes.breadcrumb');
+        $c = config('components.breadcrumb');
         $classes = $tw->merge($c['item'], $this->attributes->get('class'));
 
         return view('components.breadcrumb.item', array_merge($this->data(), [

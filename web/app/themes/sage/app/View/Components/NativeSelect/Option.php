@@ -21,7 +21,7 @@ class Option extends Component
         $tw = app('tw');
 
         /** @var array{option: string} $c */
-        $c = config('classes.native_select');
+        $c = config('components.native_select');
         $optionClasses = $tw->merge($c['option'], $this->attributes->get('class'));
 
         return view('components.native-select.option', array_merge($this->data(), [

@@ -13,7 +13,7 @@ class Content extends Component
     public function __construct(
         public string $size = 'default',
         public string $dataSlot = 'alert-dialog-content',
-        /** Tailwind duration segment; empty uses `classes.alert_dialog.default_duration_segment`. */
+        /** Tailwind duration segment; empty uses `components.alert_dialog.default_duration_segment`. */
         public string $duration = '',
     ) {}
 
@@ -23,7 +23,7 @@ class Content extends Component
         $tw = app('tw');
 
         /** @var array{default_duration_segment: string, overlay: string, panel: string} $c */
-        $c = config('classes.alert_dialog');
+        $c = config('components.alert_dialog');
         $segment = $this->duration !== '' ? $this->duration : $c['default_duration_segment'];
 
         $overlayClasses = $tw->merge(

@@ -2,8 +2,8 @@
 name: shadpine-ui
 description: >-
   Shadpine UI: Alpine.js components inspired by shadcn/ui — Blade primitives
-  in resources/views/components, TS in resources/ts/components, config/classes
-  only when shadcn exports CVA (e.g. buttonVariants), Vitest. This repo uses
+  in resources/views/components, TS in resources/ts/components,
+  config/components/*.php for Tailwind class maps, Vitest. This repo uses
   Blade + Tailwind + $tw merge.
 ---
 
@@ -22,8 +22,8 @@ description: >-
 
 1. **Parity:** identify the shadcn/ui component and props/slots to mirror.
 2. **`primitive/`** — Radix-parity **behavior only**: roles, `aria-*`, keyboard handlers, **all Alpine** for the widget (`x-data` on root, `x-teleport`, `x-trap`, `x-show`, `@click` / `@keydown` on **plain HTML** in this file — not inside nested `<x-*>`). Minimal Tailwind; **no `@props` / `@php` in `primitive/*.blade.php`** — props and branching live in **`app/View/Components/{Name}/Primitive/*.php`**. See **`accordion/primitive/`**.
-3. **Styled layer** — **`App\View\Components\{Name}/*.php`**: constructor defaults for **`dataSlot`** / **`wrapperDataSlot`** / **`selectDataSlot`**; **`render()`** reads **`config('classes.{slug}')`** and **`$tw->merge()`** only — **no Tailwind utility literals in `View/Components/*.php`**. Blade composes **`<x-{name}.primitive.*>`** and is **markup-only** (no **`@props`** / **`@php`**). See **`.cursor/rules/09-blade-laravel-components.mdc`**, **`14-shadpine-ui.mdc`**.
-4. **`config/classes/{slug}.php`** — CVA maps when shadcn exports them (**`button.php`**, etc.) **and** every widget’s merged tokens (**`alert_dialog.php`**, **`accordion.php`**, …). Put all utility strings there so styles are easy to find; PHP never embeds Tailwind class strings. Confirm against the **current** registry `*.tsx` when mirroring shadcn.
+3. **Styled layer** — **`App\View\Components\{Name}/*.php`**: constructor defaults for **`dataSlot`** / **`wrapperDataSlot`** / **`selectDataSlot`**; **`render()`** reads **`config('components.{slug}')`** and **`$tw->merge()`** only — **no Tailwind utility literals in `View/Components/*.php`**. Blade composes **`<x-{name}.primitive.*>`** and is **markup-only** (no **`@props`** / **`@php`**). See **`.cursor/rules/09-blade-laravel-components.mdc`**, **`14-shadpine-ui.mdc`**.
+4. **`config/components/{slug}.php`** — CVA maps when shadcn exports them (**`button.php`**, etc.) **and** every widget’s merged tokens (**`alert_dialog.php`**, **`accordion.php`**, …). Put all utility strings there so styles are easy to find; PHP never embeds Tailwind class strings. Confirm against the **current** registry `*.tsx` when mirroring shadcn.
 5. **`resources/ts/components/{name}/{name}.ts`** (+ **`index.ts`** re-exporting the factory) — `export function name(...)` for Alpine; register in **`app.ts`** via `import { name } from './components/{name}'` and `Alpine.data('name', name)`.
 6. **`resources/ts/components/{name}/{name}.test.ts`** — Vitest coverage for state and helpers (colocated).
 7. **`docs/components/{name}.md`** — APG link, props, file map; add a row to **`docs/components/INDEX.md`**.

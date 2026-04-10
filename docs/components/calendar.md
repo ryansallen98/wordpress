@@ -2,7 +2,7 @@
 
 **Inspired by shadcn/ui:** [Calendar](https://ui.shadcn.com/docs/components/radix/calendar) (built on **React DayPicker** upstream).
 
-**This implementation** uses **Blade** markup, **Alpine.js** (`Alpine.data('calendar')`), and **date-fns** for month math and labels — no React. Visual tokens mirror the **new-york-v4** registry ([`calendar.json`](https://ui.shadcn.com/r/styles/new-york-v4/calendar.json)): root shell, **month and year pickers** (**`x-native-select`**, `size="sm"`) in one caption row — **borderless**, compact tokens from **`config/classes/calendar.php`** (**`caption_select_*`**), abbreviated month names (**`MMM`**) in the dropdown, full month in the **`sr-only`** live region. Prev/next icon buttons, weekday row, day grid, and day button `data-*` hooks for selection styling.
+**This implementation** uses **Blade** markup, **Alpine.js** (`Alpine.data('calendar')`), and **date-fns** for month math and labels — no React. Visual tokens mirror the **new-york-v4** registry ([`calendar.json`](https://ui.shadcn.com/r/styles/new-york-v4/calendar.json)): root shell, **month and year pickers** (**`x-native-select`**, `size="sm"`) in one caption row — **borderless**, compact tokens from **`config/components/calendar.php`** (**`caption_select_*`**), abbreviated month names (**`MMM`**) in the dropdown, full month in the **`sr-only`** live region. Prev/next icon buttons, weekday row, day grid, and day button `data-*` hooks for selection styling.
 
 **Sync:** One Alpine state, **`visibleMonth`**, drives the **day grid** and **month/year `<select>`** values together. Initial month: **`selected`** (if set) → **`month`** (if set) → **today** — so a pre-selected date always opens in its own month; with no props, **single** and **range** both start on **the current month**.
 
@@ -21,7 +21,7 @@
 | **date-fns** locale whitelist + dynamic import | `resources/ts/components/calendar/calendar_locales.ts` |
 | Modifier / disabled parsing (ISO lists) | `resources/ts/components/calendar/calendar_modifiers.ts` |
 | **Today** in an IANA zone (`Intl`) | `resources/ts/components/calendar/calendar_timezone.ts` |
-| Class tokens | `config/classes/calendar.php` → **`config('classes.calendar')`** |
+| Class tokens | `config/components/calendar.php` → **`config('components.calendar')`** |
 | Min/max shortcuts (PHP) | `app/View/Components/Calendar/CalendarBounds.php` — **`mergeMinMaxWithOptions()`** (PHPUnit: **`tests/View/Components/Calendar/CalendarBoundsTest.php`**) |
 
 ### Portable bundle (other projects)
@@ -33,7 +33,7 @@ Copy these paths together; keep **`App\`** PSR-4 → **`app/`** (or adjust names
 - `app/View/Components/Calendar/ViewState.php`
 - `app/View/Components/Calendar/CalendarBounds.php`
 - `resources/ts/components/calendar/**` (including **`index.ts`** barrel)
-- `config/classes/calendar.php` — ensure Tailwind scans **`../../config/`** (this theme’s **`app.css`** **`@source`**)
+- `config/components/calendar.php` — ensure Tailwind scans **`../../config/`** (this theme’s **`app.css`** **`@source`**)
 - Register **`Alpine.data('calendar', calendar)`** in your entry (e.g. **`app.ts`**) and depend on **`date-fns`**
 - Optional: PHPUnit **`tests/View/Components/Calendar/CalendarBoundsTest.php`**, **`ViewStateTest.php`** if you keep the same namespace
 
@@ -101,7 +101,7 @@ Also pull **`x-native-select`**, **`x-button`**, **`x-button.icon`**, and **`x-l
 | `modifiers-class-names` | `array<string, string>` | `[]` | Tailwind (or arbitrary) classes per modifier name, merged on the **`<td>`** (e.g. **`[&>button]:line-through`** targets the inner button). |
 | `data-slot` | string | `calendar` | Override the root element’s **`data-slot`** (prop name **`dataSlot`** in Blade). |
 
-Pass **`class`** on **`x-calendar`**; it merges onto the root with **`config('classes.calendar')['root']`**. The default root includes **`w-fit`** (same idea as shadcn’s **`DayPicker`** wrapper) so width follows the seven-column grid. To **fill a parent** (e.g. a full-width card), pass **`class="w-full"`** — Tailwind Merge resolves the conflict with **`w-fit`**.
+Pass **`class`** on **`x-calendar`**; it merges onto the root with **`config('components.calendar')['root']`**. The default root includes **`w-fit`** (same idea as shadcn’s **`DayPicker`** wrapper) so width follows the seven-column grid. To **fill a parent** (e.g. a full-width card), pass **`class="w-full"`** — Tailwind Merge resolves the conflict with **`w-fit`**.
 
 ### Events (Alpine `$dispatch` on the root element)
 
@@ -128,7 +128,7 @@ Alpine dispatches bubble to ancestors, so listen on a **wrapper** (or use **`$di
 
 ## Modifying
 
-- **Tokens:** `config/classes/calendar.php`. Root **`--cell-size`** / **`--cell-radius`** match shadcn: **`[--cell-size:theme(spacing.7)]`**, **`[--cell-radius:var(--radius-md)]`**. Weekday and week **rows use `flex`** with **`flex-1`** cells (React DayPicker / registry parity), not CSS grid. Each **`month`** panel uses **`md:min-w-[calc(7*var(--cell-size))]`** so multi-month **`md:flex-row`** layouts do not compress below seven cells. Day buttons use **`relative isolate z-10`**, **`aspect-square`**, **`min-w-(--cell-size)`**, and **`rounded-(--cell-radius)`** like the [registry](https://ui.shadcn.com/r/styles/new-york-v4/calendar.json). For larger cells, override on **`x-calendar`**, e.g. **`[--cell-size:2.75rem]`** ([shadcn: custom cell size](https://ui.shadcn.com/docs/components/radix/calendar#custom-cell-size)).
+- **Tokens:** `config/components/calendar.php`. Root **`--cell-size`** / **`--cell-radius`** match shadcn: **`[--cell-size:theme(spacing.7)]`**, **`[--cell-radius:var(--radius-md)]`**. Weekday and week **rows use `flex`** with **`flex-1`** cells (React DayPicker / registry parity), not CSS grid. Each **`month`** panel uses **`md:min-w-[calc(7*var(--cell-size))]`** so multi-month **`md:flex-row`** layouts do not compress below seven cells. Day buttons use **`relative isolate z-10`**, **`aspect-square`**, **`min-w-(--cell-size)`**, and **`rounded-(--cell-radius)`** like the [registry](https://ui.shadcn.com/r/styles/new-york-v4/calendar.json). For larger cells, override on **`x-calendar`**, e.g. **`[--cell-size:2.75rem]`** ([shadcn: custom cell size](https://ui.shadcn.com/docs/components/radix/calendar#custom-cell-size)).
 - **Behavior / i18n:** `calendar_grid.ts` (weekday labels use **date-fns** `enUS` today); extend **`calendar()`** options for other locales later.
 
 ## Exporting

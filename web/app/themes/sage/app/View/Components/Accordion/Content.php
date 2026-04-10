@@ -20,7 +20,7 @@ class Content extends Component
         $tw = app('tw');
 
         /** @var array{content: string} $c */
-        $c = config('classes.accordion');
+        $c = config('components.accordion');
         $classes = $tw->merge($c['content'], $this->attributes->get('class'));
 
         return view('components.accordion.content', array_merge($this->data(), [

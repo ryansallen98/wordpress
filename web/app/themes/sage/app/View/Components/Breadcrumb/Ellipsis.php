@@ -19,7 +19,7 @@ class Ellipsis extends Component
         /** @var TailwindMerge $tw */
         $tw = app('tw');
         /** @var array{ellipsis: string} $c */
-        $c = config('classes.breadcrumb');
+        $c = config('components.breadcrumb');
         $classes = $tw->merge(
             $c['ellipsis'],
             $this->attributes->get('class'),

@@ -19,7 +19,7 @@ class Footer extends Component
         /** @var TailwindMerge $tw */
         $tw = app('tw');
         /** @var array{footer: string} $c */
-        $c = config('classes.alert_dialog');
+        $c = config('components.alert_dialog');
         $classes = $tw->merge(
             $c['footer'],
             $this->attributes->get('class'),

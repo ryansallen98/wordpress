@@ -19,7 +19,7 @@ class Media extends Component
         /** @var TailwindMerge $tw */
         $tw = app('tw');
         /** @var array{media: string} $c */
-        $c = config('classes.alert_dialog');
+        $c = config('components.alert_dialog');
         $classes = $tw->merge(
             $c['media'],
             $this->attributes->get('class'),

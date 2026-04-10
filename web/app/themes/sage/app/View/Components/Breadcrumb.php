@@ -24,7 +24,7 @@ class Breadcrumb extends Component
         $label = $this->ariaLabel ?? __('Breadcrumbs', 'sage');
 
         /** @var array{list: string} $c */
-        $c = config('classes.breadcrumb');
+        $c = config('components.breadcrumb');
         $listClasses = $tw->merge(
             $c['list'],
             $this->attributes->get('class'),

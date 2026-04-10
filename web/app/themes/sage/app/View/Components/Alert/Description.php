@@ -21,7 +21,7 @@ class Description extends Component
         $tw = app('tw');
 
         /** @var array{description: string} $config */
-        $config = config('classes.alert');
+        $config = config('components.alert');
         $classes = $tw->merge(
             $config['description'],
             $this->attributes->get('class'),

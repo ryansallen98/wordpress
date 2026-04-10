@@ -10,7 +10,7 @@ Alerts here are **presentational** (no `primitive/` subtree): static layout and 
 |------|------|
 | Root | `resources/views/components/alert/index.blade.php` |
 | Title / description / action | `title.blade.php`, `description.blade.php`, `action.blade.php` |
-| Class tokens | `config/classes/alert.php` → `config('classes.alert')` |
+| Class tokens | `config/components/alert.php` → `config('components.alert')` |
 
 ## Usage (Blade)
 
@@ -24,14 +24,14 @@ Alerts here are **presentational** (no `primitive/` subtree): static layout and 
 </x-alert>
 ```
 
-- **`variant`:** `default` | `destructive` (see `config/classes/alert.php`).
+- **`variant`:** `default` | `destructive` (see `config/components/alert.php`).
 - **`role`:** default `alert`; override for `status` or other live region semantics if the copy is non-interruptive.
 
 ## Modifying
 
-- **Colors / layout / grid:** edit `config/classes/alert.php` and optionally slot components; merge with `$tw` in each Blade file.
+- **Colors / layout / grid:** edit `config/components/alert.php` and optionally slot components; merge with `$tw` in each Blade file.
 - **Semantics:** prefer a real heading for the title when the outline matters: `<x-alert.title as="h2">`.
 
 ## Exporting
 
-Copy `alert/*.blade.php` and `config/classes/alert.php`; register Laravel config so `config('classes.alert')` resolves (Acorn loads `config/classes/*.php` as nested keys).
+Copy `alert/*.blade.php` and `config/components/alert.php`; register Laravel config so `config('components.alert')` resolves (Acorn loads `config/components/*.php` as nested keys).

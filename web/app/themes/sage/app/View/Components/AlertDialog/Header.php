@@ -19,7 +19,7 @@ class Header extends Component
         /** @var TailwindMerge $tw */
         $tw = app('tw');
         /** @var array{header: string} $c */
-        $c = config('classes.alert_dialog');
+        $c = config('components.alert_dialog');
         $classes = $tw->merge(
             $c['header'],
             $this->attributes->get('class'),

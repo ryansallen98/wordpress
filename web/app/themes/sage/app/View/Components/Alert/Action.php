@@ -20,7 +20,7 @@ class Action extends Component
         $tw = app('tw');
 
         /** @var array{action: string} $config */
-        $config = config('classes.alert');
+        $config = config('components.alert');
         $classes = $tw->merge(
             $config['action'],
             $this->attributes->get('class'),

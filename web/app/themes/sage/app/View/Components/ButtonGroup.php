@@ -21,7 +21,7 @@ class ButtonGroup extends Component
         $tw = app('tw');
 
         /** @var array{group: array{base: string, orientation: array<string, string>}} $c */
-        $c = config('classes.button_group');
+        $c = config('components.button_group');
         $orientationKey = in_array($this->orientation, ['horizontal', 'vertical'], true)
             ? $this->orientation
             : 'horizontal';

@@ -2,7 +2,7 @@
 
 **Inspired by shadcn/ui:** [Native Select](https://ui.shadcn.com/docs/components/native-select)
 
-Styled **`<select>`** with a chevron affordance. Prefer this over the Radix-style custom **Select** when you want **native** behavior, **mobile** pickers, or minimal JS. No Alpine factory — default Tailwind strings live in each Blade file’s **`@php`** block (no separate **`config/classes`** file).
+Styled **`<select>`** with a chevron affordance. Prefer this over the Radix-style custom **Select** when you want **native** behavior, **mobile** pickers, or minimal JS. No Alpine factory — class tokens live in **`config/components/native_select.php`**; **`App\View\Components\NativeSelect*`** merge and pass **`$wrapperClasses`** / **`$selectClasses`** / etc. into markup-only Blade.
 
 ## Files
 

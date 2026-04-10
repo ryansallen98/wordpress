@@ -49,7 +49,7 @@ class Calendar extends Component
         $tw = app('tw');
 
         /** @var array<string, string> $calendarClasses */
-        $calendarClasses = config('classes.calendar');
+        $calendarClasses = config('components.calendar');
 
         $defaultLocale = str_replace('_', '-', app()->getLocale());
 

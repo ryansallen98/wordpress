@@ -23,7 +23,7 @@ class AspectRatio extends Component
         /** @var TailwindMerge $tw */
         $tw = app('tw');
         /** @var array{root: string} $c */
-        $c = config('classes.aspect_ratio');
+        $c = config('components.aspect_ratio');
         $classes = $tw->merge(
             $c['root'],
             $this->attributes->get('class'),

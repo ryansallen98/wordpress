@@ -21,7 +21,7 @@ class Title extends Component
         $tw = app('tw');
 
         /** @var array{title: string} $config */
-        $config = config('classes.alert');
+        $config = config('components.alert');
         $classes = $tw->merge(
             $config['title'],
             $this->attributes->get('class'),

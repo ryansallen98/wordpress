@@ -23,7 +23,7 @@ class Badge extends Component
         $tw = app('tw');
 
         /** @var array{base: string, variants: array<string, string>} $config */
-        $config = config('classes.badge');
+        $config = config('components.badge');
 
         $tag = AllowedTag::resolve($this->as, ['a', 'button', 'span', 'div'], 'span');
         $classes = $tw->merge(

@@ -22,7 +22,7 @@ final class ViewStateTest extends TestCase
      */
     private static function calendarClasses(): array
     {
-        $path = dirname(__DIR__, 4).'/config/classes/calendar.php';
+        $path = dirname(__DIR__, 4).'/config/components/calendar.php';
 
         return require $path;
     }

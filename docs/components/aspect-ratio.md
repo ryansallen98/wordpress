@@ -41,4 +41,4 @@
 
 ## Exporting
 
-Copy **`aspect-ratio/index.blade.php`** and ensure **`$tw`** is available in Blade (theme **`ThemeServiceProvider`**). No **`config/classes`**, no **`app.ts`** entry.
+Copy **`aspect-ratio/index.blade.php`** and ensure **`$tw`** is available in Blade (theme **`ThemeServiceProvider`**). No **`config/components`**, no **`app.ts`** entry.

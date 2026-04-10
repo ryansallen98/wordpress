@@ -20,7 +20,7 @@ class Trigger extends Component
         $tw = app('tw');
 
         /** @var array{trigger: string} $c */
-        $c = config('classes.accordion');
+        $c = config('components.accordion');
         $classes = $tw->merge($c['trigger'], $this->attributes->get('class'));
 
         return view('components.accordion.trigger', array_merge($this->data(), [

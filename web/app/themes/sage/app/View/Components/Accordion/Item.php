@@ -21,7 +21,7 @@ class Item extends Component
         $tw = app('tw');
 
         /** @var array{item: string} $c */
-        $c = config('classes.accordion');
+        $c = config('components.accordion');
         $classes = $tw->merge($c['item'], $this->attributes->get('class'));
 
         return view('components.accordion.item', array_merge($this->data(), [

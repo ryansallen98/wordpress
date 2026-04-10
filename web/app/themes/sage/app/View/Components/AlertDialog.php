@@ -20,7 +20,7 @@ class AlertDialog extends Component
         $tw = app('tw');
 
         /** @var array{root: string} $c */
-        $c = config('classes.alert_dialog');
+        $c = config('components.alert_dialog');
         $classes = $tw->merge($c['root'], $this->attributes->get('class'));
         $defaultOpen = $this->attributes->boolean('default-open') || $this->attributes->boolean('defaultOpen');
 

@@ -16,7 +16,7 @@ final class ButtonClasses
         bool $iconSizes = false,
     ): string {
         /** @var array{base: string, variants: array<string, string>, sizes: array<string, string>, icon_sizes: array<string, string>} $config */
-        $config = config('classes.button');
+        $config = config('components.button');
 
         $sizeKey = $iconSizes ? 'icon_sizes' : 'sizes';
 

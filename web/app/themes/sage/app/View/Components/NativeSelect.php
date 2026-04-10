@@ -26,7 +26,7 @@ class NativeSelect extends Component
         $tw = app('tw');
 
         /** @var array{wrapper: string, select: string, icon: string} $c */
-        $c = config('classes.native_select');
+        $c = config('components.native_select');
 
         $wrapperClasses = $tw->merge($c['wrapper'], $this->class);
         $selectClasses = $tw->merge($c['select'], $this->selectClass);

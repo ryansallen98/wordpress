@@ -21,7 +21,7 @@ class Separator extends Component
         $tw = app('tw');
 
         /** @var array{separator: array{radix: string, group: string}} $c */
-        $c = config('classes.button_group');
+        $c = config('components.button_group');
         $orientationKey = in_array($this->orientation, ['horizontal', 'vertical'], true)
             ? $this->orientation
             : 'vertical';

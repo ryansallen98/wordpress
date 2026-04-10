@@ -15,7 +15,7 @@ Class strings mirror the **new-york-v4** registry ([`button-group.json`](https:/
 | Root (`role="group"`) | `resources/views/components/button-group/index.blade.php` |
 | Separator (`role="none"`) | `separator.blade.php` |
 | Static label text | `text.blade.php` |
-| Class tokens | `config/classes/button_group.php` → **`config('classes.button_group')`** |
+| Class tokens | `config/components/button_group.php` → **`config('components.button_group')`** |
 
 ## Usage (Blade)
 
@@ -47,13 +47,13 @@ Class strings mirror the **new-york-v4** registry ([`button-group.json`](https:/
 - **`x-button-group.text`:** **`as`** = **`div`** (default), **`span`**, or **`label`** — same visual as **`ButtonGroupText`** (`bg-muted`, **`rounded-md`**, **`shadow-xs`**). For **`asChild`**-style composition (e.g. wrap a **`<label>`** with attributes), use **`as="label"`** and pass **`for`**, etc., on the component.
 - **Nested **`x-button-group`:**** outer group gains **`gap-2`** between child groups (shadcn parity).
 
-**`x-button`** sizes already include **`in-data-[slot=button-group]:rounded-lg`** in **`config/classes/button.php`** so corners sit flush inside the group.
+**`x-button`** sizes already include **`in-data-[slot=button-group]:rounded-lg`** in **`config/components/button.php`** so corners sit flush inside the group.
 
 ## Modifying
 
-- **Layout / tokens:** **`config/classes/button_group.php`** — `group` (base + `orientation`), `text`, `separator` (`radix` + `group` layers like upstream **`cn()`**).
+- **Layout / tokens:** **`config/components/button_group.php`** — `group` (base + `orientation`), `text`, `separator` (`radix` + `group` layers like upstream **`cn()`**).
 - **Per-instance overrides:** pass **`class`** on any subcomponent; **`$tw->merge`** applies.
 
 ## Exporting
 
-Copy **`button-group/*.blade.php`** and **`config/classes/button_group.php`**. Ensure **`$tw`** is shared in views. Add **`@source`** for **`config/`** in Tailwind entry (see theme **`resources/css/app.css`**) so utility strings in PHP are discoverable.
+Copy **`button-group/*.blade.php`** and **`config/components/button_group.php`**. Ensure **`$tw`** is shared in views. Add **`@source`** for **`config/`** in Tailwind entry (see theme **`resources/css/app.css`**) so utility strings in PHP are discoverable.

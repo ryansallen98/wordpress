@@ -10,7 +10,7 @@ Buttons are **presentational** (no `primitive/`): polymorphic tag via `as`.
 |------|------|
 | Default button | `resources/views/components/button/index.blade.php` |
 | Icon / square sizes | `resources/views/components/button/icon.blade.php` |
-| Class tokens | `config/classes/button.php` → `config('classes.button')` |
+| Class tokens | `config/components/button.php` → `config('components.button')` |
 
 ## Usage (Blade)
 
@@ -28,9 +28,9 @@ Buttons are **presentational** (no `primitive/`): polymorphic tag via `as`.
 
 ## Modifying
 
-- **Variants / sizes:** edit `config/classes/button.php` (primary place for CVA-style strings).
+- **Variants / sizes:** edit `config/components/button.php` (primary place for CVA-style strings).
 - **Wrapper markup:** edit `index.blade.php` / `icon.blade.php`; keep `$tw->merge` order: base → variant → size → `$attributes->get('class')`.
 
 ## Exporting
 
-Copy `button/*.blade.php` and `config/classes/button.php`; ensure Blade has `$tw` (TailwindMerge) shared into views like this theme’s `ThemeServiceProvider`.
+Copy `button/*.blade.php` and `config/components/button.php`; ensure Blade has `$tw` (TailwindMerge) shared into views like this theme’s `ThemeServiceProvider`.
