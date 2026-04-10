@@ -1,3 +1,7 @@
+## 1.0.70 — 2026-04-08
+
+- **Calendar:** When **`show-outside-days="false"`**, keep a full **7×N** grid with **padding** cells (hidden outside-month slots) instead of dropping days — fixes **uneven flex cell width** and **weekday column drift**. Alpine: **`padding`** cells use **`role="presentation"`** / **`aria-hidden`** and no day button; **`buildCalendarWeeks`**, **`tdClass`**, **`selectCell`**, **`pickIsoForDayOfMonthInMonth`** updated; tests adjusted.
+
 ## 1.0.69 — 2026-04-08
 
 - **Shadpine UI (Blade):** Same **`$tw->merge($…, $attributes->get('class') ?? '')`** guard on every class-component root that pairs **`class="{{ … }}"`** with **`$attributes->except(…'class'…)`** — **alert** (root + parts), **badge**, **button** / **button.icon**, **button-group** (root, text, separator), **aspect-ratio**, **breadcrumb** (nav list + item/link/page/separator/ellipsis), **alert-dialog** (root, footer/header/media, trigger, title, description, action, cancel, content panel), **native-select** (**optgroup**, **option**). Prevents dropped consumer **`class`** when **`render()`** runs before the attribute bag is hydrated.

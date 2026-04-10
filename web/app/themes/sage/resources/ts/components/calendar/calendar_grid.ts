@@ -18,6 +18,8 @@ import {
 export type CalendarMode = 'single' | 'range';
 
 export interface CalendarCell {
+  /** True for empty slots when `showOutsideDays` is false (keeps 7 columns + weekday alignment). */
+  padding?: boolean;
   iso: string;
   label: string;
   outside: boolean;
@@ -77,12 +79,8 @@ export function buildCalendarWeeks(
 ): CalendarCell[][] {
   const monthStart = startOfMonth(visibleMonth);
   const monthEnd = endOfMonth(visibleMonth);
-  const gridStart = options.showOutsideDays
-    ? startOfWeek(monthStart, { weekStartsOn: options.weekStartsOn })
-    : monthStart;
-  const gridEnd = options.showOutsideDays
-    ? endOfWeek(monthEnd, { weekStartsOn: options.weekStartsOn })
-    : monthEnd;
+  const gridStart = startOfWeek(monthStart, { weekStartsOn: options.weekStartsOn });
+  const gridEnd = endOfWeek(monthEnd, { weekStartsOn: options.weekStartsOn });
 
   const days = eachDayOfInterval({ start: gridStart, end: gridEnd });
   const [rangeFrom, rangeTo] = normalizeRange(options.rangeFrom, options.rangeTo);
@@ -94,6 +92,23 @@ export function buildCalendarWeeks(
   const cells: CalendarCell[] = days.map((d) => {
     const iso = format(d, 'yyyy-MM-dd');
     const outside = !isSameMonth(d, monthStart);
+
+    if (outside && !options.showOutsideDays) {
+      return {
+        iso: `__pad__${iso}`,
+        padding: true,
+        label: '',
+        outside: false,
+        today: false,
+        disabled: true,
+        modifierKeys: [],
+        selectedSingle: false,
+        rangeStart: false,
+        rangeMiddle: false,
+        rangeEnd: false,
+      };
+    }
+
     let disabled = false;
     if (options.min && isBefore(d, options.min)) {
       disabled = true;

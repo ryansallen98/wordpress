@@ -196,7 +196,7 @@ export function pickIsoForDayOfMonthInMonth(
   dayOfMonth: number
 ): string | null {
   for (const c of flattenCalendarWeeks(weeks)) {
-    if (c.disabled || c.outside) {
+    if (c.padding || c.disabled || c.outside) {
       continue;
     }
     if (parseISO(c.iso).getDate() === dayOfMonth) {
@@ -596,6 +596,9 @@ export function calendar(opts: CalendarAlpineOpts = {}): CalendarAlpineState {
       if (!t.dayTd) {
         return '';
       }
+      if (cell.padding) {
+        return `${t.dayTd} pointer-events-none`;
+      }
       const parts = [t.dayTd];
       if (cell.disabled && t.disabled) {
         parts.push(t.disabled);
@@ -784,7 +787,7 @@ export function calendar(opts: CalendarAlpineOpts = {}): CalendarAlpineState {
     },
 
     selectCell(cell: CalendarCell) {
-      if (cell.disabled) {
+      if (cell.padding || cell.disabled) {
         return;
       }
       this.focusedIso = cell.iso;

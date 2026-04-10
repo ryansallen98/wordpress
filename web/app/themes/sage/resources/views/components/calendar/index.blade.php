@@ -114,27 +114,30 @@
               <div role="row" class="{{ $c['week_row'] }}">
                 <template x-for="cell in week" :key="cell.iso">
                   <div
-                    role="gridcell"
-                    :data-selected="cellSelected(cell) ? 'true' : 'false'"
-                    :data-modifiers="cell.modifierKeys.join(' ')"
+                    :role="cell.padding ? 'presentation' : 'gridcell'"
+                    :aria-hidden="cell.padding ? 'true' : null"
+                    :data-selected="cell.padding ? 'false' : (cellSelected(cell) ? 'true' : 'false')"
+                    :data-modifiers="cell.padding ? '' : cell.modifierKeys.join(' ')"
                     :class="tdClass(cell)"
                   >
-                    <button
-                      type="button"
-                      class="{{ $tw->merge($c['day_button']) }}"
-                      :disabled="cell.disabled"
-                      :tabindex="dayTabindex(cell)"
-                      :data-day="cell.iso"
-                      :data-selected-single="cell.selectedSingle ? 'true' : 'false'"
-                      :data-range-start="cell.rangeStart ? 'true' : 'false'"
-                      :data-range-end="cell.rangeEnd ? 'true' : 'false'"
-                      :data-range-middle="cell.rangeMiddle ? 'true' : 'false'"
-                      :aria-label="dayAriaLabel(cell.iso)"
-                      :aria-selected="cellSelected(cell) ? 'true' : 'false'"
-                      :aria-current="cell.today ? 'date' : null"
-                      x-on:click="selectCell(cell)"
-                      x-text="cell.label"
-                    ></button>
+                    <template x-if="!cell.padding">
+                      <button
+                        type="button"
+                        class="{{ $tw->merge($c['day_button']) }}"
+                        :disabled="cell.disabled"
+                        :tabindex="dayTabindex(cell)"
+                        :data-day="cell.iso"
+                        :data-selected-single="cell.selectedSingle ? 'true' : 'false'"
+                        :data-range-start="cell.rangeStart ? 'true' : 'false'"
+                        :data-range-end="cell.rangeEnd ? 'true' : 'false'"
+                        :data-range-middle="cell.rangeMiddle ? 'true' : 'false'"
+                        :aria-label="dayAriaLabel(cell.iso)"
+                        :aria-selected="cellSelected(cell) ? 'true' : 'false'"
+                        :aria-current="cell.today ? 'date' : null"
+                        x-on:click="selectCell(cell)"
+                        x-text="cell.label"
+                      ></button>
+                    </template>
                   </div>
                 </template>
               </div>

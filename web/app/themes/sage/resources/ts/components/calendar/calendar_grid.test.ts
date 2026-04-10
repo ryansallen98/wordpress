@@ -35,16 +35,21 @@ describe('buildCalendarWeeks', () => {
     expect(w0![3]!.outside).toBe(false);
   });
 
-  it('omits outside days when showOutsideDays is false', () => {
+  it('uses padding placeholders when showOutsideDays is false (7 columns, weekday alignment)', () => {
     const weeks = buildCalendarWeeks(april2026, {
       weekStartsOn: 0,
       showOutsideDays: false,
       mode: 'single',
     });
+    expect(weeks.every((w) => w.length === 7)).toBe(true);
     const w0 = weeks[0];
     expect(w0).toBeDefined();
-    expect(w0![0]!.iso).toBe('2026-04-01');
-    expect(w0![0]!.outside).toBe(false);
+    expect(w0![0]!.padding).toBe(true);
+    expect(w0![1]!.padding).toBe(true);
+    expect(w0![2]!.padding).toBe(true);
+    expect(w0![3]!.iso).toBe('2026-04-01');
+    expect(w0![3]!.outside).toBe(false);
+    expect(w0![3]!.padding).toBeFalsy();
   });
 
   it('marks selected single day', () => {

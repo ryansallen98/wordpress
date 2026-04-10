@@ -222,14 +222,14 @@ describe('calendar keyboard helpers', () => {
       mode: 'single',
     });
     const flat = oct2026InMonthOnly.flat();
-    const lastIso = flat[flat.length - 1]!.iso;
-    expect(lastIso).toBe('2026-10-31');
-    expect(moveCalendarKeyboardFocus(oct2026InMonthOnly, lastIso, 'ArrowRight')).toBeNull();
-    expect(moveCalendarKeyboardFocus(oct2026InMonthOnly, lastIso, 'ArrowDown')).toBeNull();
-    const firstIso = flat[0]!.iso;
-    expect(firstIso).toBe('2026-10-01');
-    expect(moveCalendarKeyboardFocus(oct2026InMonthOnly, firstIso, 'ArrowLeft')).toBeNull();
-    expect(moveCalendarKeyboardFocus(oct2026InMonthOnly, firstIso, 'ArrowUp')).toBeNull();
+    const lastReal = [...flat].reverse().find((c) => !c.padding);
+    const firstReal = flat.find((c) => !c.padding);
+    expect(lastReal?.iso).toBe('2026-10-31');
+    expect(firstReal?.iso).toBe('2026-10-01');
+    expect(moveCalendarKeyboardFocus(oct2026InMonthOnly, lastReal!.iso, 'ArrowRight')).toBeNull();
+    expect(moveCalendarKeyboardFocus(oct2026InMonthOnly, lastReal!.iso, 'ArrowDown')).toBeNull();
+    expect(moveCalendarKeyboardFocus(oct2026InMonthOnly, firstReal!.iso, 'ArrowLeft')).toBeNull();
+    expect(moveCalendarKeyboardFocus(oct2026InMonthOnly, firstReal!.iso, 'ArrowUp')).toBeNull();
   });
 
   it('Home and End move within the week row', () => {
