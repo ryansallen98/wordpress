@@ -73,6 +73,14 @@ npm run docker:dev
 
 That starts the app on `http://localhost:8080` by default.
 
+Local Docker uses the mounted root `.env`, so keep these values in your local
+`.env` unless you intentionally point the app at another database:
+
+-   `DB_HOST=127.0.0.1`
+-   `DB_NAME=bedrock`
+-   `DB_USER=bedrock`
+-   `DB_PASSWORD=bedrock`
+
 Useful commands:
 
 -   `npm run docker:build`
