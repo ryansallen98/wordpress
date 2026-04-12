@@ -8,6 +8,9 @@ web/app/uploads/*
 !web/app/uploads/.gitkeep
 web/app/cache/*
 
+# MCP
+.playwright-mcp
+
 # WordPress
 web/wp
 !web/.htaccess
@@ -48,6 +51,7 @@ web/app/settings
 web/app/advanced-cache.php
 
 # Allowed Plugins
-!web/app/plugins/advanced-custom-fields-pro/
+!web/app/plugins/acf-extended-pro
 !web/app/plugins/acf-extended-pro/
+!web/app/plugins/webp-upload-optimizer
 !web/app/plugins/webp-upload-optimizer/
