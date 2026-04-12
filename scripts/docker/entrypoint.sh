@@ -94,7 +94,10 @@ load_runtime_env() {
 
   mkdir -p "${runtime_dir}" /run/mysqld /var/lib/mysql "${uploads_dir}" /var/www/vhosts/localhost/logs
   chown -R mysql:mysql /run/mysqld /var/lib/mysql
-  chown -R 1000:1000 "${runtime_dir}" /var/www/vhosts/localhost
+  # In dev we bind-mount the host repo at ${app_root}; recursively chown-ing the
+  # mount (including .git objects) can fail with EPERM on macOS/ Docker Desktop.
+  # Restrict ownership updates to runtime/writeable paths only.
+  chown -R 1000:1000 "${runtime_dir}" "${uploads_dir}" /var/www/vhosts/localhost/logs 2>/dev/null || true
 
   rm -rf /var/www/vhosts/localhost/html
   ln -s "${app_root}/web" /var/www/vhosts/localhost/html
