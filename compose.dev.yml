@@ -11,7 +11,7 @@ services:
   vite:
     image: node:20-bookworm-slim
     working_dir: /app/web/app/themes/sage
-    command: sh -lc "if [ ! -d node_modules ]; then npm ci; fi && npm run dev -- --host 0.0.0.0 --port 5173"
+    command: sh -lc "if [ ! -x node_modules/.bin/vite ]; then npm ci; fi && npm run dev -- --host 0.0.0.0 --port 5173"
     environment:
       CHOKIDAR_USEPOLLING: 'true'
       WATCHPACK_POLLING: 'true'
