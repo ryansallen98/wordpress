@@ -4,6 +4,9 @@ services:
       BEDROCK_USE_HOST_ENV: '1'
     volumes:
       - ./:/var/www/vhosts/localhost/bedrock
+      # Preserve image-installed Composer dependencies when bind-mounting the repo.
+      - bedrock-vendor:/var/www/vhosts/localhost/bedrock/vendor
+      - sage-vendor:/var/www/vhosts/localhost/bedrock/web/app/themes/sage/vendor
 
   vite:
     image: node:20-bookworm-slim
@@ -22,3 +25,5 @@ services:
 
 volumes:
   sage-node-modules:
+  bedrock-vendor:
+  sage-vendor:
