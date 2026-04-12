@@ -50,5 +50,4 @@ web/app/advanced-cache.php
 # Allowed Plugins
 !web/app/plugins/advanced-custom-fields-pro/
 !web/app/plugins/acf-extended-pro/
-!web/app/plugins/saipan-location-checkout/
-!web/app/plugins/woocommerce-zelle-payments/
+!web/app/plugins/webp-upload-optimizer/
