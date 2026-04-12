@@ -46,7 +46,9 @@
     "roots/wp-config": "1.0.0",
     "wpackagist-plugin/woocommerce": "^10.5",
     "wpackagist-plugin/updraftplus": "^1.26",
-    "wpengine/advanced-custom-fields-pro": "^6.0"
+    "wpengine/advanced-custom-fields-pro": "^6.0",
+    "wpackagist-plugin/seo-by-rank-math": "^1.0",
+    "wpackagist-plugin/litespeed-cache": "^7.8"
   },
   "require-dev": {
     "laravel/pint": "^1.18"
