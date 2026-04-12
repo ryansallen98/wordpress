@@ -8,7 +8,29 @@ WORKDIR /app
 
 COPY . .
 
-RUN composer install \
+# Coolify: pass as build arguments (same names as .env) so ACF Pro + ACFE Pro
+# can install during composer install. Omitted vars skip COMPOSER_AUTH only.
+ARG ACF_PRO_LICENSE_KEY
+ARG WP_DOMAIN
+ARG WP_HOME
+ARG ACFE_PRO_KEY
+ARG ACFE_PRO_URL
+ENV ACF_PRO_LICENSE_KEY=$ACF_PRO_LICENSE_KEY \
+    WP_DOMAIN=$WP_DOMAIN \
+    WP_HOME=$WP_HOME \
+    ACFE_PRO_KEY=$ACFE_PRO_KEY \
+    ACFE_PRO_URL=$ACFE_PRO_URL
+
+RUN if [ -z "${WP_HOME:-}" ] && [ -n "${WP_DOMAIN:-}" ]; then \
+      export WP_HOME="https://${WP_DOMAIN}"; \
+    fi \
+ && if [ -z "${ACFE_PRO_URL:-}" ] && [ -n "${WP_DOMAIN:-}" ]; then \
+      export ACFE_PRO_URL="${WP_DOMAIN}"; \
+    fi \
+ && if [ -n "${ACF_PRO_LICENSE_KEY:-}" ] && [ -n "${WP_HOME:-}" ]; then \
+      export COMPOSER_AUTH="$(php /app/scripts/composer/export-composer-auth.php)"; \
+    fi \
+ && composer install \
     --no-dev \
     --prefer-dist \
     --no-interaction \
@@ -63,10 +85,12 @@ COPY --from=php_vendor /app/web/app/themes/sage/vendor /var/www/vhosts/localhost
 COPY --from=theme_assets /app/web/app/themes/sage/public/build /var/www/vhosts/localhost/bedrock/web/app/themes/sage/public/build
 COPY scripts/docker/supervisord.conf /etc/supervisor/conf.d/bedrock.conf
 COPY scripts/docker/entrypoint.sh /usr/local/bin/bedrock-entrypoint
+COPY scripts/docker/mariadb-embedded-or-idle.sh /usr/local/bin/bedrock-mariadb-embedded-or-idle
 COPY scripts/docker/litespeed-start.sh /usr/local/bin/litespeed-start
 COPY scripts/docker/bedrock-post-deploy-when-ready.sh /usr/local/bin/bedrock-post-deploy-when-ready
 
 RUN chmod +x /usr/local/bin/bedrock-entrypoint \
+ && chmod +x /usr/local/bin/bedrock-mariadb-embedded-or-idle \
  && chmod +x /usr/local/bin/litespeed-start \
  && chmod +x /usr/local/bin/bedrock-post-deploy-when-ready \
  && mkdir -p /run/mysqld /var/lib/mysql "${BEDROCK_RUNTIME_DIR}" /var/log/supervisor /var/www/vhosts/localhost/logs /var/www/vhosts/localhost/bedrock/web/app/uploads /var/www/vhosts/localhost/bedrock/web/app/cache \

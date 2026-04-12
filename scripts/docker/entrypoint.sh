@@ -30,10 +30,14 @@ write_bedrock_dotenv() {
     printf 'WP_ENV="%s"\n' "$(dotenv_escape "${WP_ENV}")"
     printf 'WP_HOME="%s"\n' "$(dotenv_escape "${WP_HOME:-}")"
     printf 'WP_SITEURL="%s"\n' "$(dotenv_escape "${WP_SITEURL:-}")"
-    printf 'DB_HOST="%s"\n' "$(dotenv_escape "${DB_HOST}")"
-    printf 'DB_NAME="%s"\n' "$(dotenv_escape "${DB_NAME}")"
-    printf 'DB_USER="%s"\n' "$(dotenv_escape "${DB_USER}")"
-    printf 'DB_PASSWORD="%s"\n' "$(dotenv_escape "${DB_PASSWORD}")"
+    if [[ -n "${DATABASE_URL:-}" ]]; then
+      printf 'DATABASE_URL="%s"\n' "$(dotenv_escape "${DATABASE_URL}")"
+    else
+      printf 'DB_HOST="%s"\n' "$(dotenv_escape "${DB_HOST}")"
+      printf 'DB_NAME="%s"\n' "$(dotenv_escape "${DB_NAME}")"
+      printf 'DB_USER="%s"\n' "$(dotenv_escape "${DB_USER}")"
+      printf 'DB_PASSWORD="%s"\n' "$(dotenv_escape "${DB_PASSWORD}")"
+    fi
     printf 'DB_PREFIX="%s"\n' "$(dotenv_escape "${DB_PREFIX:-wp_}")"
     printf 'AUTH_KEY="%s"\n' "$(dotenv_escape "${AUTH_KEY}")"
     printf 'SECURE_AUTH_KEY="%s"\n' "$(dotenv_escape "${SECURE_AUTH_KEY}")"
@@ -53,9 +57,10 @@ write_runtime_env() {
   local db_name="${DB_NAME:-bedrock}"
   local db_user="${DB_USER:-bedrock}"
   local db_password="${DB_PASSWORD:-$(random_hex 24)}"
+  local db_host="${DB_HOST:-127.0.0.1}"
 
   cat >"${runtime_env}" <<EOF
-DB_HOST='127.0.0.1'
+DB_HOST='${db_host}'
 DB_NAME='${db_name}'
 DB_USER='${db_user}'
 DB_PASSWORD='${db_password}'
@@ -77,6 +82,7 @@ load_runtime_env() {
   local incoming_db_name="${DB_NAME:-}"
   local incoming_db_user="${DB_USER:-}"
   local incoming_db_password="${DB_PASSWORD:-}"
+  local incoming_database_url="${DATABASE_URL:-}"
   local incoming_auth_key="${AUTH_KEY:-}"
   local incoming_secure_auth_key="${SECURE_AUTH_KEY:-}"
   local incoming_logged_in_key="${LOGGED_IN_KEY:-}"
@@ -102,6 +108,7 @@ load_runtime_env() {
   source "${runtime_env}"
   set +a
 
+  export DATABASE_URL="${incoming_database_url:-${DATABASE_URL:-}}"
   export DB_HOST="${incoming_db_host:-${DB_HOST:-127.0.0.1}}"
   export DB_NAME="${incoming_db_name:-${DB_NAME}}"
   export DB_USER="${incoming_db_user:-${DB_USER}}"
@@ -122,7 +129,28 @@ load_runtime_env() {
   fi
 
   export DB_PREFIX="${DB_PREFIX:-wp_}"
-  write_bedrock_dotenv
+
+  if [[ "${BEDROCK_USE_HOST_ENV:-0}" == "1" && -f "${app_root}/.env" ]]; then
+    echo 'bedrock: BEDROCK_USE_HOST_ENV=1 and .env exists, using mounted host .env.' >&2
+  else
+    write_bedrock_dotenv
+  fi
+}
+
+# Bundled MariaDB is used only when no DATABASE_URL and DB_HOST is loopback/local.
+bedrock_embedded_mariadb() {
+  if [[ -n "${DATABASE_URL:-}" ]]; then
+    return 1
+  fi
+
+  case "${DB_HOST:-127.0.0.1}" in
+    127.0.0.1 | localhost)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
 }
 
 initialize_database_directory() {
@@ -189,17 +217,24 @@ main() {
   # Host `.env` / Compose often exports `DB_*` as empty strings. Bash `${VAR:-x}`
   # treats empty as "set", so defaults never apply; Bedrock Dotenv is immutable and
   # cannot override existing empty env vars. Unset empties so defaults work.
-  for v in DB_HOST DB_NAME DB_USER DB_PASSWORD; do
+  for v in DB_HOST DB_NAME DB_USER DB_PASSWORD DATABASE_URL; do
     if [[ -z "${!v:-}" ]]; then
       unset "$v"
     fi
   done
 
   load_runtime_env
-  initialize_database_directory
-  start_temporary_database
-  provision_database
-  stop_temporary_database
+
+  if bedrock_embedded_mariadb; then
+    export BEDROCK_EMBEDDED_MARIADB=1
+    initialize_database_directory
+    start_temporary_database
+    provision_database
+    stop_temporary_database
+  else
+    export BEDROCK_EMBEDDED_MARIADB=0
+    echo 'bedrock: external database — skipping embedded MariaDB init (set DATABASE_URL or a non-local DB_HOST).' >&2
+  fi
 
   exec "$@"
 }

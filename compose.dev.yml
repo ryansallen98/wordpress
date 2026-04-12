@@ -1,0 +1,24 @@
+services:
+  bedrock:
+    environment:
+      BEDROCK_USE_HOST_ENV: '1'
+    volumes:
+      - ./:/var/www/vhosts/localhost/bedrock
+
+  vite:
+    image: node:20-bookworm-slim
+    working_dir: /app/web/app/themes/sage
+    command: sh -lc "if [ ! -d node_modules ]; then npm ci; fi && npm run dev -- --host 0.0.0.0 --port 5173"
+    environment:
+      CHOKIDAR_USEPOLLING: 'true'
+      WATCHPACK_POLLING: 'true'
+    ports:
+      - '${VITE_PORT:-5173}:5173'
+    volumes:
+      - ./:/app
+      - sage-node-modules:/app/web/app/themes/sage/node_modules
+    depends_on:
+      - bedrock
+
+volumes:
+  sage-node-modules:

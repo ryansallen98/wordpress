@@ -3,16 +3,26 @@ services:
     build:
       context: .
       target: runtime
+      # Passed into the php_vendor stage so `composer install` can reach ACF Pro /
+      # ACFE Pro. Docker Compose reads these from your project `.env` (same keys as
+      # .env.example). Build args can appear in image metadata — use CI secrets for prod.
+      args:
+        ACF_PRO_LICENSE_KEY: ${ACF_PRO_LICENSE_KEY:-}
+        WP_DOMAIN: ${WP_DOMAIN:-}
+        WP_HOME: ${WP_HOME:-}
+        ACFE_PRO_KEY: ${ACFE_PRO_KEY:-}
+        ACFE_PRO_URL: ${ACFE_PRO_URL:-}
     environment:
       WP_ENV: ${WP_ENV:-development}
       WP_HOME: ${WP_HOME:-http://localhost:8080}
       WP_SITEURL: ${WP_SITEURL:-}
-      # Bundled MariaDB listens on loopback inside this container — not on the host.
-      # Use a literal here so a host `.env` with `DB_HOST=` cannot inject an empty
-      # value (breaks Bedrock immutable Dotenv + PHP `localhost` socket behavior).
-      DB_HOST: '127.0.0.1'
-      # Omit DB_NAME / DB_USER / DB_PASSWORD so they stay unset unless you add them;
-      # the entrypoint generates defaults on first boot.
+      # Default: bundled MariaDB on loopback. Override DB_HOST (e.g. `mysql`) or set
+      # DATABASE_URL for an external DB; entrypoint skips embedded MariaDB when you do.
+      DB_HOST: ${DB_HOST:-127.0.0.1}
+      DB_NAME: ${DB_NAME:-}
+      DB_USER: ${DB_USER:-}
+      DB_PASSWORD: ${DB_PASSWORD:-}
+      DATABASE_URL: ${DATABASE_URL:-}
       DB_PREFIX: ${DB_PREFIX:-wp_}
     ports:
       - '${APP_PORT:-8080}:80'
