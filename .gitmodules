@@ -4,3 +4,6 @@
 [submodule "web/app/plugins/webp-upload-optimizer"]
 	path = web/app/plugins/webp-upload-optimizer
 	url = https://github.com/ryansallen98/webp-upload-optimizer
+[submodule "web/app/plugins/acf-extended-pro"]
+	path = web/app/plugins/acf-extended-pro
+	url = https://github.com/ryansallen98/acf-extended-pro
