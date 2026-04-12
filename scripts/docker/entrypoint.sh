@@ -156,6 +156,27 @@ bedrock_embedded_mariadb() {
   esac
 }
 
+require_explicit_embedded_mariadb_opt_in() {
+  if ! bedrock_embedded_mariadb; then
+    return 0
+  fi
+
+  if [[ "${BEDROCK_ALLOW_EMBEDDED_MARIADB:-0}" == "1" ]]; then
+    return 0
+  fi
+
+  cat >&2 <<'EOF'
+bedrock: refusing to boot with the bundled MariaDB unless BEDROCK_ALLOW_EMBEDDED_MARIADB=1.
+Use the embedded database for local Docker Compose only.
+For production/Coolify, configure an external persistent MySQL/MariaDB service via
+DATABASE_URL or DB_HOST/DB_NAME/DB_USER/DB_PASSWORD.
+If you intentionally want the bundled MariaDB, set BEDROCK_ALLOW_EMBEDDED_MARIADB=1
+and persist /var/lib/mysql and /var/lib/bedrock.
+EOF
+
+  exit 1
+}
+
 initialize_database_directory() {
   if [[ ! -d /var/lib/mysql/mysql ]]; then
     mariadb-install-db --user=mysql --datadir=/var/lib/mysql >/dev/null
@@ -227,6 +248,7 @@ main() {
   done
 
   load_runtime_env
+  require_explicit_embedded_mariadb_opt_in
 
   if bedrock_embedded_mariadb; then
     export BEDROCK_EMBEDDED_MARIADB=1

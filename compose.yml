@@ -11,6 +11,9 @@ services:
         WP_DOMAIN: ${WP_DOMAIN:-}
         WP_HOME: ${WP_HOME:-}
     environment:
+      # Local Docker Compose explicitly opts into the bundled MariaDB.
+      # Production deploys should use an external persistent database instead.
+      BEDROCK_ALLOW_EMBEDDED_MARIADB: '1'
       WP_ENV: ${WP_ENV:-development}
       WP_HOME: ${WP_HOME:-http://localhost:8080}
       WP_SITEURL: ${WP_SITEURL:-}
