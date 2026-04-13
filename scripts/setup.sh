@@ -2,6 +2,10 @@
 
 set -e  # Exit immediately if a command exits with a non-zero status
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$ROOT_DIR"
+
 echo "🚀 Starting full project setup..."
 
 # 1. Install PHP dependencies for Bedrock
@@ -32,13 +36,13 @@ else
   exit 1
 fi
 
-# 5. Optional: build assets
-if [ "$1" == "--build" ]; then
-  echo "⚡ Building frontend assets..."
-  npm run build
-else
-  echo "ℹ️ Skipping build. Run './setup.sh --build' to build assets."
-fi
+# 5. Build frontend assets
+echo "⚡ Building frontend assets..."
+npm run build
+
+cd "$ROOT_DIR"
+echo "🔧 Running post-deploy..."
+bash "$SCRIPT_DIR/post-deploy.sh"
 
 echo "✅ Setup complete!"
 echo ""

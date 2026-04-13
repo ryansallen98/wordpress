@@ -18,8 +18,7 @@ description: >-
 ## Repo root
 
 ```bash
-./scripts/setup.sh
-./scripts/setup.sh --build
+./scripts/setup.sh                # Composer + theme deps + npm run build + post-deploy
 ./scripts/sync-agent-mirrors.sh   # after editing .cursor/rules/*.mdc or .claude/skills/
 composer run lint
 composer run lint:fix

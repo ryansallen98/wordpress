@@ -11,7 +11,7 @@ description: >-
 
 ## Local
 
-- **Setup:** `./scripts/setup.sh` or `./scripts/setup.sh --build` from repo root.
+- **Setup:** `./scripts/setup.sh` from repo root (includes theme `npm run build` and `post-deploy.sh` when configured).
 - **Server:** adjust `scripts/post-deploy.sh` (Composer in theme if `vendor/` not committed, theme activate, `wp acorn optimize:clear`, rewrite flush, object cache, etc.).
 
 ## CI (typical)

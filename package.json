@@ -7,6 +7,7 @@
     "docker:start": "docker compose up -d",
     "docker:stop": "docker compose -f compose.yml -f compose.dev.yml down",
     "setup": "./scripts/setup.sh",
+    "post-deploy": "./scripts/post-deploy.sh",
     "test:theme": "cd web/app/themes/sage && composer run lint && composer test && npm run lint && npm run test && npm run typecheck",
     "format:theme": "cd web/app/themes/sage && npm run format:check",
     "test:theme:integration": "cd web/app/themes/sage && composer run test:integration"
